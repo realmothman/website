@@ -3,464 +3,566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currículo - Nícolas Garibaldi</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Nícolas Garibaldi | Engenharia do Movimento</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <!-- Google Fonts: Lato -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <!-- html2pdf.js CDN (CORRIGIDO: 'integrity' no lugar de 'xintegrity') -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eD2LGpPLYLKbRfix0keIRDZOOK9vcKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- React e Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        /* Reset e Configuração Básica */
-        * {
-            box-sizing: border-box;
-            -webkit-print-color-adjust: exact;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #525252;
-            margin: 0;
-            padding: 40px;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #05080f;
+            color: #cbd5e1;
+            overflow-x: hidden;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            width: max-content;
         }
 
-        /* Container A4 Rígido */
-        .a4-page {
-            width: 210mm;
-            height: 297mm;
-            background-color: white;
-            display: flex;
-            flex-direction: row;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin: 0; 
-            overflow: hidden; 
-        }
+        .italic { font-style: italic; }
 
-        /* Coluna Lateral */
-        .sidebar {
-            width: 32%;
-            background-color: #f8fafc;
-            color: #334155;
-            padding: 2rem 1.5rem;
-            border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Conteúdo Principal */
-        .main-content {
-            width: 68%;
-            background-color: #ffffff;
-            /* Aumentando o padding horizontal para reduzir a largura dos blocos de texto */
-            padding: 2.5rem 3.5rem; 
-            color: #334155;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Utilitários de Texto e Cores */
-        .text-accent { color: #7c3aed; }
-        .bg-accent { background-color: #7c3aed; }
-        .border-accent { border-color: #ddd6fe; }
-        
-        h1, h2, h3 { font-weight: 900; }
-
-        /* Tags de Competência */
-        .tag-skill {
-            padding: 5px 8px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 0.4rem;
-            background-color: white;
-            color: #5b21b6;
-            border: 1px solid #ede9fe;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Design de Cursos (SIMPLIFICADO E MELHORADO) */
-        .course-item {
-            position: relative;
-            padding-left: 0.8rem;
-            margin-bottom: 0.8rem; /* Aumentei um pouco a margem */
-        }
-        .course-item:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 5px;
-            width: 5px;
-            height: 5px;
-            background-color: #a78bfa; /* purple-400 */
-            border-radius: 50%;
-        }
-
-        .course-item:last-child { margin-bottom: 0; }
-        
-        /* Timeline Principal */
-        .timeline-item {
-            position: relative;
+        .container-custom {
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
             padding-left: 1.5rem;
-            border-left: 2px solid #f1f5f9;
-            padding-bottom: 2rem;
+            padding-right: 1.5rem;
         }
-        .timeline-item:last-child {
-            border-left: 2px solid transparent;
-            padding-bottom: 0;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: -6px;
-            top: 6px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #7c3aed;
-            border: 2px solid white;
-            box-shadow: 0 0 0 2px #ddd6fe;
+        @media (min-width: 768px) {
+            .container-custom {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
         }
 
-        /* Botão de Download */
-        #download-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Ajustes para Geração PDF */
-        body.generating-pdf {
-            padding: 0;
-            margin: 0;
-            background-color: white;
-            justify-content: flex-start;
-            width: 210mm;
-            height: 297mm;
-            overflow: hidden;
-        }
-        
-        body.generating-pdf .a4-page {
-            box-shadow: none;
-            margin: 0;
+        .switch-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 999px;
+            display: inline-flex;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Foto de Perfil */
-        .profile-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        .switch-btn {
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
         }
 
-        @media print {
-            body { padding: 0; background-color: white; }
-            .a4-page { box-shadow: none; }
-            #download-container { display: none; }
+        .switch-btn.active {
+            background: #22c55e;
+            color: #000;
+        }
+
+        .lang-btn {
+            font-size: 10px;
+            font-weight: 900;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+        .lang-btn.active {
+            opacity: 1;
+            color: #22c55e;
         }
     </style>
 </head>
 <body>
+    <div id="root"></div>
 
-    <div id="download-container">
-        <button id="download-pdf" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors flex items-center gap-2 cursor-pointer">
-            <i data-lucide="download" class="w-5 h-5"></i>
-            Baixar PDF (Com Foto)
-        </button>
-    </div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-    <!-- Container da Página A4 -->
-    <div id="curriculo-pdf" class="a4-page">
-            
-        <!-- Coluna Lateral -->
-        <aside class="sidebar">
-            
-            <div class="flex flex-col mb-6 text-center items-center">
-                <!-- FOTO DE PERFIL -->
-                <div class="mb-4">
-                    <!-- A URL da imagem foi verificada e está correta. O problema era a integridade da biblioteca. -->
-                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQG5G3zHhINIbQ/profile-displayphoto-crop_800_800/B4EZqSitGEKsAI-/0/1763395171654?e=1767225600&v=beta&t=z8ctsVscirKgbxz2eo8d4An0DmU-2fSlzf8_OfHQEVM" 
-                         alt="Nícolas Garibaldi" 
-                         class="profile-photo"
-                         crossorigin="anonymous">
-                </div>
+        const translations = {
+            pt: {
+                navAssessoria: "Assessoria",
+                navPersonal: "Personal 1:1",
+                navBtn: "Abrir Protocolo",
+                heroTagDigital: "O Método do Presencial no seu celular",
+                heroTagPersonal: "Atendimento exclusivo e individual",
+                heroTitle1: "ESTRATÉGIA",
+                heroTitle2: "VALIDADA.",
+                heroTitle1Pers: "TREINO 1:1",
+                heroTitle2Pers: "FEITO À MÃO.",
+                heroSubDigital: "Tenha o acompanhamento de um treinador que atende mais de 100 alunos reais todos os dias. Ciência do movimento aplicada à sua rotina.",
+                heroSubPersonal: "Nada de planilha pronta. Nada genérico. Eu analiso tua rotina, limitações e objetivos para montar exatamente o que tu precisa.",
+                heroCTA: "QUERO MINHA ASSESSORIA",
+                heroCTAPers: "QUERO MEU PERSONAL",
+                marquee1: "Performance Atlética",
+                marquee2: "Reabilitação Funcional",
+                marquee3: "Treinamento Funcional",
+                aboutTitle: "ENGENHARIA DO",
+                aboutTitleSpan: "MOVIMENTO.",
+                aboutSub: "Minha trajetória une o rigor técnico da Educação Física com o raciocínio lógico da Tecnologia.",
+                aboutText: "Com 6 anos de experiência prática, gerencio o treinamento de mais de 100 alunos no CT em que atuo. Utilizo meu background tecnológico para monitorar cada detalhe da sua evolução técnica. Cada treino é pensado para você evoluir de verdade.",
+                aboutCheck1: "Monitoramento por Dados",
+                aboutCheck2: "Reabilitação Funcional",
+                aboutCheck3: "Performance Atlética",
+                aboutCheck4: "Treinamento Funcional",
+                planTitle: "PLANOS DE",
+                planTitleSpan: "EVOLUÇÃO.",
+                modeDigital: "Digital",
+                modePersonal: "Personal 1:1",
+                digitalCard1: "Avaliação Digital",
+                digitalCard2: "Assessoria",
+                digitalCard3: "Adicionais",
+                digitalPrice: "R$ 250",
+                digitalPriceSub: "/mês",
+                digitalCheck1: "Treino A/B Personalizado",
+                digitalCheck2: "Troca Mensal de Planejamento",
+                digitalCheck3: "1 Aula Online Mensal (1h)",
+                digitalCheck4: "Suporte WhatsApp Direto",
+                personalHandmade: "TREINO 100% FEITO À MÃO 👊",
+                personalHandmadeSub: "Nada de planilha pronta. Nada genérico. Eu analiso tua rotina, limitações e objetivos para montar exatamente o que tu precisa.",
+                inclusoTitle: "O que está incluso",
+                incluso1: "Avaliação completa inicial",
+                incluso2: "Sessões presenciais individuais",
+                incluso3: "Treino atualizado no app Tecnofit",
+                incluso4: "Suporte WhatsApp",
+                incluso5: "Contrato + termo de responsabilidade",
+                avaliaCardTitle: "Avaliação Inicial",
+                avaliaOffer: "FECHE UM PACOTE HOJE E PAGUE APENAS R$ 100 NA AVALIAÇÃO",
+                pricesTitle: "Valores",
+                priceSingle: "Sessão Avulsa",
+                pricePack4: "Pacote 4x",
+                pricePack8: "Pacote 8x",
+                pricePack12: "Pacote 12x",
+                pricePerSession: "SAI R$ {val} / AULA",
+                recommended: "Recomendado",
+                locationNote: "Atendo na tua casa ou na academia que tu frequenta. Se a academia cobrar taxa de profissional externo, a gente combina certinho.",
+                faqTitle: "PERGUNTAS FREQUENTES.",
+                footerExperience: "Porto Alegre/RS • Engenharia do Movimento",
+                mobileCTA: "INICIAR AGORA"
+            },
+            en: {
+                navAssessoria: "Coaching",
+                navPersonal: "Personal 1:1",
+                navBtn: "Open Protocol",
+                heroTagDigital: "The in-person method, now on your phone",
+                heroTagPersonal: "Exclusive and individual service",
+                heroTitle1: "VALIDATED",
+                heroTitle2: "STRATEGY.",
+                heroTitle1Pers: "1:1 TRAINING",
+                heroTitle2Pers: "HANDCRAFTED.",
+                heroSubDigital: "Get coached by a trainer who manages 100+ real students daily. Movement science applied to your routine.",
+                heroSubPersonal: "No ready-made templates. Nothing generic. I analyze your routine, limitations, and goals to build exactly what you need.",
+                heroCTA: "GET MY COACHING",
+                heroCTAPers: "GET MY PERSONAL TRAINER",
+                marquee1: "Athletic Performance",
+                marquee2: "Functional Rehab",
+                marquee3: "Functional Training",
+                aboutTitle: "MOVEMENT",
+                aboutTitleSpan: "ENGINEERING.",
+                aboutSub: "My career combines Physical Education technical rigor with IT logical reasoning.",
+                aboutText: "With 6 years of hands-on experience, I manage the training of over 100 students at the facility where I work. I use my tech background to monitor every detail of your technical evolution. Every workout is designed for you to truly evolve.",
+                aboutCheck1: "Data Monitoring",
+                aboutCheck2: "Functional Rehab",
+                aboutCheck3: "Athletic Performance",
+                aboutCheck4: "Functional Training",
+                planTitle: "EVOLUTION",
+                planTitleSpan: "PLANS.",
+                modeDigital: "Digital",
+                modePersonal: "Personal 1:1",
+                digitalCard1: "Digital Assessment",
+                digitalCard2: "Coaching",
+                digitalCard3: "Add-ons",
+                digitalPrice: "R$ 250",
+                digitalPriceSub: "/month",
+                digitalCheck1: "Personalized A/B Training",
+                digitalCheck2: "Monthly Planning Update",
+                digitalCheck3: "1 Monthly Online Class (1h)",
+                digitalCheck4: "Direct WhatsApp Support",
+                personalHandmade: "100% HANDCRAFTED TRAINING 👊",
+                personalHandmadeSub: "No templates. No generic plans. I analyze your routine, limitations, and goals to build exactly what you need.",
+                inclusoTitle: "What is included",
+                incluso1: "Complete initial assessment",
+                incluso2: "Individual in-person sessions",
+                incluso3: "Updated training on Tecnofit app",
+                incluso4: "WhatsApp Support",
+                incluso5: "Professional Contract + Waiver",
+                avaliaCardTitle: "Initial Assessment",
+                avaliaOffer: "CLOSE A PACKAGE TODAY AND PAY ONLY R$ 100 FOR THE ASSESSMENT",
+                pricesTitle: "Pricing",
+                priceSingle: "Single Session",
+                pricePack4: "4x Package",
+                pricePack8: "8x Package",
+                pricePack12: "12x Package",
+                pricePerSession: "R$ {val} / CLASS",
+                recommended: "Recommended",
+                locationNote: "I attend at your home or your gym. If the gym charges a fee for external trainers, we'll arrange that clearly.",
+                faqTitle: "FREQUENT QUESTIONS.",
+                footerExperience: "Porto Alegre/RS • Movement Engineering",
+                mobileCTA: "START NOW"
+            }
+        };
 
-                <div class="text-sm font-black text-slate-800 mb-4 bg-slate-100 px-3 py-1 rounded-full">33 anos • Porto Alegre, RS</div>
+        const Icon = ({ name, size = 24, className = "" }) => {
+            return <i data-lucide={name} style={{ width: size, height: size }} className={className}></i>;
+        };
 
-                <div class="w-full space-y-2 text-left pl-2">
-                    <div class="flex items-center gap-3 text-xs group">
-                        <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm text-accent group-hover:bg-accent group-hover:text-white transition-colors flex-shrink-0">
-                            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
-                        </div>
-                        <span class="font-medium">(51) 99842-2391</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs group">
-                        <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm text-accent group-hover:bg-accent group-hover:text-white transition-colors flex-shrink-0">
-                            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
-                        </div>
-                        <span class="truncate font-bold text-slate-700">ngaribaldif@gmail.com</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs group">
-                        <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm text-accent group-hover:bg-accent group-hover:text-white transition-colors flex-shrink-0">
-                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-                        </div>
-                        <span class="font-medium">Híbrido/Remoto</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Especialidade -->
-            <div class="mb-6 bg-white p-3 rounded-xl shadow-sm border border-slate-100">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Especialidade</p>
-                <p class="text-xs font-black text-accent leading-tight">Treinamento Funcional e Reabilitação</p>
-            </div>
-
-            <section class="mb-6">
-                <h3 class="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                    <i data-lucide="layers" class="w-3 h-3"></i> Competências
-                </h3>
-                <div class="flex flex-col gap-1">
-                    <span class="tag-skill"><i data-lucide="monitor-play" class="w-3 h-3 opacity-70"></i> Mentoria Digital</span>
-                    <span class="tag-skill"><i data-lucide="calendar-clock" class="w-3 h-3 opacity-70"></i> Periodização</span>
-                    <span class="tag-skill"><i data-lucide="users" class="w-3 h-3 opacity-70"></i> Populações Especiais</span>
-                    <span class="tag-skill"><i data-lucide="activity" class="w-3 h-3 opacity-70"></i> Reabilitação</span>
-                    <span class="tag-skill"><i data-lucide="video" class="w-3 h-3 opacity-70"></i> Edição de Vídeo</span>
-                    <span class="tag-skill"><i data-lucide="code-2" class="w-3 h-3 opacity-70"></i> Automação (No-Code)</span>
-                </div>
-            </section>
-
-            <section class="mb-6">
-                <h3 class="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                    <i data-lucide="languages" class="w-3 h-3"></i> Idiomas
-                </h3>
-                <div class="space-y-2 text-xs">
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="font-bold text-slate-700">Inglês</span>
-                            <span class="text-slate-500 text-[10px]">Avançado</span>
-                        </div>
-                        <div class="w-full bg-slate-200 rounded-full h-1.5">
-                            <div class="bg-accent h-1.5 rounded-full" style="width: 90%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="font-bold text-slate-700">Espanhol</span>
-                            <span class="text-slate-500 text-[10px]">Intermediário</span>
-                        </div>
-                        <div class="w-full bg-slate-200 rounded-full h-1.5">
-                            <div class="bg-accent h-1.5 rounded-full" style="width: 60%"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="flex-grow">
-                <h3 class="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                    <i data-lucide="award" class="w-3 h-3"></i> Cursos Relevantes
-                </h3>
-                
-                <div class="flex flex-col text-xs space-y-2">
-                    <div class="course-item">
-                        <strong class="block text-slate-800 leading-tight">Master Treinamento Funcional</strong>
-                        <span class="text-[10px] text-slate-500 font-semibold">Voll</span>
-                    </div>
-                    <div class="course-item">
-                        <strong class="block text-slate-800 leading-tight">Programação de Treinamento</strong>
-                        <span class="text-[10px] text-slate-500 font-semibold">BPro</span>
-                    </div>
-                    <div class="course-item">
-                        <strong class="block text-slate-800 leading-tight">Reabilitação Funcional</strong>
-                        <span class="text-[10px] text-slate-500 font-semibold">BPro</span>
-                    </div>
-                    <div class="course-item">
-                        <strong class="block text-slate-800 leading-tight">KettleBell Avançado</strong>
-                        <span class="text-[10px] text-slate-500 font-semibold">BPro</span>
-                    </div>
-                    <div class="course-item">
-                        <strong class="block text-slate-800 leading-tight">Treinamento Funcional para Alta Performance</strong>
-                        <span class="text-[10px] text-slate-500 font-semibold">Transformance Nível 1 & 2</span>
-                    </div>
-                </div>
-            </section>
-
-        </aside>
-
-        <!-- Coluna Principal -->
-        <main class="main-content">
-            
-            <header class="mb-8 pb-4 border-b border-slate-100">
-                <h1 class="text-5xl text-slate-900 mb-2 tracking-tight">NÍCOLAS GARIBALDI</h1>
-                <p class="text-xl text-accent font-bold tracking-wide">Educador Físico</p>
-            </header>
-
-            <section class="mb-6">
-                <h2 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                    <i data-lucide="user" class="w-5 h-5 text-accent"></i>
-                    Sobre Mim
-                </h2>
-                <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-accent">
-                    <p class="text-sm leading-relaxed text-slate-600 text-justify">
-                        Profissional com 6 anos de experiência prática e background tecnológico. Busco oportunidades em <strong>mentoria digital ou treinamento personalizado</strong>. Aplico conhecimentos em <strong>automação e dados</strong> para otimizar o acompanhamento de alunos, garantindo resultados mensuráveis em reabilitação e alto rendimento.
-                    </p>
-                </div>
-            </section>
-
-            <section class="mb-6">
-                <h2 class="text-sm font-bold text-slate-800 mb-6 flex items-center gap-2 uppercase tracking-wide">
-                    <i data-lucide="briefcase" class="w-5 h-5 text-accent"></i>
-                    Experiência Profissional
-                </h2>
-                
-                <div class="space-y-0">
-                    
-                    <!-- Valessa -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="text-base font-bold text-slate-800">Responsável Técnico</h3>
-                            <span class="text-[10px] font-bold text-accent bg-purple-50 px-3 py-1 rounded-full border border-purple-100">2021 - Atual</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-500 mb-3 uppercase tracking-wide">Valessa Treinamento Funcional</p>
-                        
-                        <ul class="space-y-2.5">
-                            <li class="flex items-start gap-2 text-xs text-slate-600 leading-relaxed text-justify">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-accent flex-shrink-0 mt-0.5"></i>
-                                <span><strong>Gestão e Inovação:</strong> Lidero equipe de estagiários e gerencio 100+ alunos, utilizando automação própria para monitorar frequência e evolução.</span>
-                            </li>
-                            <li class="flex items-start gap-2 text-xs text-slate-600 leading-relaxed text-justify">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-accent flex-shrink-0 mt-0.5"></i>
-                                <span><strong>Saúde e Reabilitação:</strong> Implemento protocolos de força que auxiliaram na reversão de quadros de osteopenia e no retorno seguro ao esporte pós-lesão.</span>
-                            </li>
-                            <li class="flex items-start gap-2 text-xs text-slate-600 leading-relaxed text-justify">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-accent flex-shrink-0 mt-0.5"></i>
-                                <span><strong>Performance Amadora:</strong> Preparação física para atletas amadores, focando em especificidade e prevenção de lesões.</span>
-                            </li>
-                            <li class="flex items-start gap-2 text-xs text-slate-600 leading-relaxed text-justify">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-accent flex-shrink-0 mt-0.5"></i>
-                                <span><strong>Resultados Estéticos:</strong> Estratégias de treino periodizado resultando em redução de peso e ganho de massa magra sustentável.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Studio K -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="text-base font-bold text-slate-800">Estagiário</h3>
-                            <span class="text-[10px] font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">2019 - 2020</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-500 mb-3 uppercase tracking-wide">Studio K</p>
-                        <ul class="space-y-2.5">
-                            <li class="flex items-start gap-2 text-xs text-slate-600 leading-relaxed text-justify">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
-                                <span>Acompanhamento de <strong>populações especiais</strong> (cardíacos, obesos), focando na segurança e adesão ao tratamento.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Gabriele Personal -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="text-base font-bold text-slate-800">Auxiliar</h3>
-                            <span class="text-[10px] font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">2019</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-500 mb-3 uppercase tracking-wide">Gabriele Personal Trainer</p>
-                        <ul class="space-y-2.5">
-                            <li class="flex items-start gap-2 text-xs text-slate-600 leading-relaxed text-justify">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
-                                <span>Suporte em assessoria de corrida e treinamento funcional para grupos.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </section>
-
-            <section>
-                <h2 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2 uppercase tracking-wide">
-                    <i data-lucide="graduation-cap" class="w-5 h-5 text-accent"></i>
-                    Formação Acadêmica
-                </h2>
-                
-                <!-- Layout Empilhado (Vertical) -->
-                <div class="flex flex-col gap-3">
-                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <h3 class="text-xs font-bold text-slate-800 mb-1">Educação Física</h3>
-                        <p class="text-[10px] text-slate-500 mb-1">Bacharelado • Anhanguera</p>
-                        <p class="text-[10px] font-bold text-accent">2019 - 2023</p>
-                    </div>
-                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <h3 class="text-xs font-bold text-slate-800 mb-1">Redes de Computadores</h3>
-                        <p class="text-[10px] text-slate-500 mb-1">Técnico • CTT Maxwell</p>
-                        <p class="text-[10px] text-slate-400 italic leading-tight">
-                            *Base para automação
-                        </p>
+        const FAQItem = ({ question, answer }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            return (
+                <div className="border-b border-white/5 last:border-0">
+                    <button 
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="w-full py-6 flex justify-between items-center text-left hover:text-green-400 transition-colors gap-4"
+                    >
+                        <span className="text-base md:text-lg font-bold tracking-tight uppercase">{question}</span>
+                        <span className="text-2xl shrink-0">{isOpen ? '-' : '+'}</span>
+                    </button>
+                    <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 pb-6' : 'max-h-0'}`}>
+                        <p className="text-slate-400 leading-relaxed text-sm font-medium">{answer}</p>
                     </div>
                 </div>
-            </section>
+            );
+        };
 
-        </main>
-    </div>
-    
-    <script>
-        lucide.createIcons();
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isDigital, setIsDigital] = useState(true);
+            const [lang, setLang] = useState('pt');
 
-        document.getElementById('download-pdf').addEventListener('click', () => {
-            const element = document.getElementById('curriculo-pdf');
-            const button = document.getElementById('download-pdf');
-            
-            document.body.classList.add('generating-pdf');
-            
-            button.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Gerando...';
-            button.disabled = true;
-            lucide.createIcons();
+            const t = translations[lang];
 
-            const opt = {
-                margin: 0,
-                filename: 'Curriculo_Nicolas_Garibaldi.pdf',
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true, // Importante para carregar a imagem externa
-                    scrollX: 0,
-                    scrollY: 0,
-                    windowWidth: 794
-                },
-                jsPDF: { 
-                    unit: 'mm', 
-                    format: 'a4', 
-                    orientation: 'portrait' 
-                }
+            useEffect(() => {
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                if (window.lucide) window.lucide.createIcons();
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            useEffect(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+
+            const handleWhatsApp = (planName = "") => {
+                const phoneNumber = "5551998322391";
+                const context = isDigital ? t.modeDigital : t.modePersonal;
+                const message = encodeURIComponent(`Olá Nícolas! Quero saber mais sobre ${context}${planName ? ` (${planName})` : ""}.`);
+                window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
             };
 
-            html2pdf().from(element).set(opt).save().then(() => {
-                button.innerHTML = '<i data-lucide="download" class="w-5 h-5"></i> Baixar PDF';
-                button.disabled = false;
-                lucide.createIcons();
-                document.body.classList.remove('generating-pdf');
-            }).catch((err) => {
-                console.error(err);
-                alert('Erro ao gerar PDF: ' + err.message);
-                button.disabled = false;
-                document.body.classList.remove('generating-pdf');
-            });
-        });
+            return (
+                <div className="min-h-screen selection:bg-green-400 selection:text-black scroll-smooth">
+                    
+                    {/* Header */}
+                    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-[#05080f]/95 backdrop-blur-xl py-4 shadow-2xl border-b border-white/5' : 'bg-transparent py-6 md:py-8'}`}>
+                        <div className="container-custom flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                                <Icon name="activity" size={24} className="text-green-400" />
+                                <div className="flex flex-col">
+                                    <span className="text-lg font-black tracking-tighter text-white leading-none uppercase">GARIBALDI</span>
+                                    <span className="text-[7px] font-black tracking-[0.3em] text-green-400 uppercase leading-none mt-1">
+                                        {isDigital ? t.navAssessoria : t.navPersonal}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="hidden lg:flex items-center gap-6">
+                                <div className="switch-container">
+                                    <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
+                                    <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => setLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
+                                    <span className="opacity-10">|</span>
+                                    <button onClick={() => setLang('en')} className={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</button>
+                                </div>
+                            </div>
+
+                            <button onClick={() => handleWhatsApp()} className="bg-green-500 hover:bg-white text-black px-4 py-2 md:px-6 md:py-2.5 rounded-full font-black text-[10px] md:text-xs transition-all uppercase flex items-center gap-2 shadow-lg shadow-green-500/20">
+                                {t.navBtn} <Icon name="chevron-right" size={12} />
+                            </button>
+                        </div>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
+                        <div className="absolute inset-0 -z-10">
+                            <div className="absolute top-[10%] left-[10%] w-[300px] h-[300px] bg-green-400/10 rounded-full blur-[100px]"></div>
+                        </div>
+                        <div className="container-custom text-center md:text-left grid md:grid-cols-12 items-center gap-12">
+                            <div className="md:col-span-8 lg:col-span-10">
+                                <div className="lg:hidden mb-8 flex flex-col gap-4 items-center md:items-start">
+                                    <div className="switch-container">
+                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
+                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <button onClick={() => setLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
+                                        <button onClick={() => setLang('en')} className={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</button>
+                                    </div>
+                                </div>
+                                
+                                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-6 backdrop-blur-sm">
+                                    <span className="text-[10px] font-black tracking-widest uppercase text-green-400 italic">
+                                        {isDigital ? t.heroTagDigital : t.heroTagPersonal}
+                                    </span>
+                                </div>
+
+                                <h1 className="text-4xl sm:text-6xl lg:text-[90px] font-black text-white mb-6 leading-[1] tracking-tighter uppercase italic">
+                                    {isDigital ? t.heroTitle1 : t.heroTitle1Pers}<br/>
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-300">
+                                        {isDigital ? t.heroTitle2 : t.heroTitle2Pers}
+                                    </span>
+                                </h1>
+
+                                <p className="text-base md:text-xl text-slate-400 max-w-2xl mb-10 font-bold leading-snug">
+                                    {isDigital ? t.heroSubDigital : t.heroSubPersonal}
+                                </p>
+
+                                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                                    <button onClick={() => handleWhatsApp()} className="w-full sm:w-auto bg-white text-black px-10 py-5 rounded-2xl font-black text-lg hover:bg-green-500 transition-all shadow-2xl flex items-center justify-center gap-3 transform hover:-translate-y-1">
+                                        {isDigital ? t.heroCTA : t.heroCTAPers} <Icon name="arrow-right" size={20} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Marquee */}
+                    <div className="py-8 bg-green-500 overflow-hidden border-y-4 border-black rotate-[-1deg] relative z-20">
+                        <div className="animate-marquee">
+                            {[1,2,3].map(i => (
+                                <div key={i} className="flex gap-10 items-center px-5">
+                                    <span className="text-black text-2xl md:text-3xl font-black uppercase italic">{t.marquee1}</span>
+                                    <Icon name="plus" size={24} className="text-black" />
+                                    <span className="text-black text-2xl md:text-3xl font-black uppercase italic">{t.marquee2}</span>
+                                    <Icon name="plus" size={24} className="text-black" />
+                                    <span className="text-black text-2xl md:text-3xl font-black uppercase italic">{t.marquee3}</span>
+                                    <Icon name="plus" size={24} className="text-black" />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Sobre / Autoridade */}
+                    <section className="py-24 relative overflow-hidden bg-[#070b14]">
+                        <div className="container-custom">
+                            <div className="grid md:grid-cols-12 gap-12 items-center">
+                                <div className="md:col-span-5 relative">
+                                    <div className="aspect-[4/5] bg-slate-900 rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl group">
+                                        <img src="https://i.imgur.com/E2auHBT.jpg" className="w-full h-full object-cover transition-all duration-700" alt="Nícolas Garibaldi" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent to-transparent opacity-60"></div>
+                                    </div>
+                                    <div className="absolute -bottom-6 -right-6 bg-green-500 text-black p-6 rounded-3xl hidden md:block shadow-2xl">
+                                        <div className="text-3xl font-black leading-none italic uppercase">+100 ALUNOS</div>
+                                        <div className="text-[10px] font-bold tracking-widest uppercase">Monitorados Diariamente</div>
+                                    </div>
+                                </div>
+                                <div className="md:col-span-7">
+                                    <h2 className="text-3xl md:text-6xl font-black text-white leading-none uppercase italic mb-8 underline decoration-green-400 decoration-4">{t.aboutTitle} <br/>{t.aboutTitleSpan}</h2>
+                                    <div className="space-y-6 text-slate-400">
+                                        <p className="text-lg leading-relaxed font-medium">
+                                            {t.aboutSub}
+                                        </p>
+                                        <p className="text-sm leading-relaxed font-medium">
+                                            {t.aboutText}
+                                        </p>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 uppercase text-[10px] font-black tracking-widest">
+                                            <div className="flex items-center gap-2 bg-white/5 p-3 rounded-xl border border-white/5"><Icon name="check" size={14} className="text-green-500"/> {t.aboutCheck1}</div>
+                                            <div className="flex items-center gap-2 bg-white/5 p-3 rounded-xl border border-white/5"><Icon name="check" size={14} className="text-green-400"/> {t.aboutCheck2}</div>
+                                            <div className="flex items-center gap-2 bg-white/5 p-3 rounded-xl border border-white/5"><Icon name="check" size={14} className="text-green-500"/> {t.aboutCheck3}</div>
+                                            <div className="flex items-center gap-2 bg-white/5 p-3 rounded-xl border border-white/5"><Icon name="check" size={14} className="text-green-400"/> {t.aboutCheck4}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Planos Dinâmicos */}
+                    <section id="planos" className="py-24 bg-white text-black rounded-t-[3rem] md:rounded-t-[5rem] shadow-2xl relative z-30">
+                        <div className="container-custom">
+                            <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
+                                <h2 className="text-4xl md:text-8xl font-black uppercase italic leading-none tracking-tighter text-center md:text-left">{t.planTitle} <br/><span className="text-green-600">{t.planTitleSpan}</span></h2>
+                                
+                                <div className="flex flex-col items-center gap-4">
+                                    <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{lang === 'pt' ? 'Alterar Modo' : 'Switch Mode'}</span>
+                                    <div className="switch-container">
+                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.modeDigital}</button>
+                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.modePersonal}</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {isDigital ? (
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                    <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col group hover:border-black transition-colors">
+                                        <h3 className="text-2xl font-black uppercase mb-4 tracking-tighter">{t.digitalCard1}</h3>
+                                        <div className="space-y-4 mb-10">
+                                            <div className="flex justify-between items-end border-b border-black/10 pb-2"><span className="text-[10px] font-black uppercase">{lang === 'pt' ? 'Movimento' : 'Movement'}</span><span className="text-2xl font-black text-green-600 leading-none">R$ 120</span></div>
+                                            <div className="flex justify-between items-end border-b border-black/10 pb-2"><span className="text-[10px] font-black uppercase">{lang === 'pt' ? 'Mov + Antropo' : 'Mov + Anthro'}</span><span className="text-2xl font-black text-green-600 leading-none">R$ 150</span></div>
+                                        </div>
+                                        <p className="text-[10px] font-black uppercase text-slate-500 mb-6 italic leading-relaxed">{lang === 'pt' ? 'Diagnóstico biomecânico essencial.' : 'Essential biomechanical diagnosis.'}</p>
+                                        <button onClick={() => handleWhatsApp(t.digitalCard1)} className="mt-auto w-full py-4 rounded-xl border-2 border-black font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all">{lang === 'pt' ? 'Agendar' : 'Schedule'}</button>
+                                    </div>
+                                    <div className="p-10 rounded-[2.5rem] bg-black text-white flex flex-col relative shadow-2xl lg:scale-105 z-10">
+                                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-black px-6 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{lang === 'pt' ? 'Vagas Limitadas' : 'Limited Spots'}</div>
+                                        <h3 className="text-3xl font-black uppercase mb-4 italic tracking-tighter leading-none">{t.digitalCard2}</h3>
+                                        <div className="text-5xl font-black mb-10 text-green-400 leading-none tracking-tighter">{t.digitalPrice}<span className="text-sm font-bold text-slate-400">{t.digitalPriceSub}</span></div>
+                                        <ul className="space-y-4 mb-10 text-[10px] font-black uppercase tracking-tight">
+                                            <li className="flex items-center gap-2"><Icon name="check" size={14} className="text-green-500" /> {t.digitalCheck1}</li>
+                                            <li className="flex items-center gap-2"><Icon name="check" size={14} className="text-green-500" /> {t.digitalCheck2}</li>
+                                            <li className="flex items-center gap-2"><Icon name="check" size={14} className="text-green-500" /> {t.digitalCheck3}</li>
+                                            <li className="flex items-center gap-2"><Icon name="check" size={14} className="text-green-500" /> {t.digitalCheck4}</li>
+                                        </ul>
+                                        <button onClick={() => handleWhatsApp(t.digitalCard2)} className="w-full bg-green-500 text-black py-5 rounded-2xl font-black text-lg uppercase italic hover:bg-white transition-all">{lang === 'pt' ? 'Quero Iniciar' : 'Start Now'}</button>
+                                    </div>
+                                    <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col group hover:border-black transition-colors">
+                                        <h3 className="text-2xl font-black uppercase mb-8 tracking-tighter">{t.digitalCard3}</h3>
+                                        <div className="space-y-4 mb-10 font-black uppercase text-[10px]">
+                                            <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{lang === 'pt' ? 'Corrida' : 'Running'}</span><span className="text-green-600 font-black">+R$ 100</span></div>
+                                            <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{lang === 'pt' ? 'Presencial' : 'In-person'}</span><span className="text-green-600 font-black">+R$ 100</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div>
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                                        <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-black/5">
+                                            <h3 className="text-2xl font-black uppercase italic mb-6">{t.inclusoTitle}</h3>
+                                            <ul className="space-y-6">
+                                                <li className="flex gap-4"><Icon name="search" className="text-green-600 shrink-0" /><div className="text-xs font-bold uppercase tracking-tight">{t.incluso1}</div></li>
+                                                <li className="flex gap-4"><Icon name="user-check" className="text-green-600 shrink-0" /><div className="text-xs font-bold uppercase tracking-tight">{t.incluso2}</div></li>
+                                                <li className="flex gap-4"><Icon name="smartphone" className="text-green-600 shrink-0" /><div className="text-xs font-bold uppercase tracking-tight">{t.incluso3}</div></li>
+                                                <li className="flex gap-4"><Icon name="message-circle" className="text-green-600 shrink-0" /><div className="text-xs font-bold uppercase tracking-tight">{t.incluso4}</div></li>
+                                                <li className="flex gap-4"><Icon name="file-text" className="text-green-600 shrink-0" /><div className="text-xs font-bold uppercase tracking-tight">{t.incluso5}</div></li>
+                                            </ul>
+                                        </div>
+                                        <div className="space-y-6">
+                                            <div className="bg-black text-white p-10 rounded-[2.5rem] shadow-2xl">
+                                                <h3 className="text-2xl font-black uppercase italic mb-6 text-green-400">{t.avaliaCardTitle}</h3>
+                                                <div className="space-y-4">
+                                                    <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[10px] font-black uppercase">{lang === 'pt' ? 'Movimento' : 'Movement'}</span><span className="font-black">R$ 80</span></div>
+                                                    <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[10px] font-black uppercase">{lang === 'pt' ? 'Antropometria (7 dobras)' : 'Anthropometric (7 skinfolds)'}</span><span className="font-black">R$ 60</span></div>
+                                                    <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-xl mt-4">
+                                                        <p className="text-sm font-black uppercase text-green-400">{t.avaliaOffer}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="bg-slate-100 p-8 rounded-[2rem] border border-black/5 flex gap-4 items-center">
+                                                <Icon name="car" className="text-black" />
+                                                <div className="text-[10px] font-bold text-slate-500 uppercase leading-snug">{lang === 'pt' ? 'Gratuito até 5km. Maior distância: acréscimo de R$ 10 a R$ 50/sessão.' : 'Free up to 5km. Longer distance: R$ 10 to R$ 50/session extra.'}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div className="p-8 rounded-3xl bg-slate-50 border border-black/5 flex flex-col">
+                                            <h4 className="text-[10px] font-black uppercase text-slate-400 mb-2">{t.priceSingle}</h4>
+                                            <div className="text-3xl font-black">R$ 120</div>
+                                            <button onClick={() => handleWhatsApp(t.priceSingle)} className="mt-8 w-full py-3 rounded-xl border-2 border-black font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all">{lang === 'pt' ? 'Agendar' : 'Schedule'}</button>
+                                        </div>
+                                        <div className="p-8 rounded-3xl bg-slate-50 border border-black/5 flex flex-col">
+                                            <h4 className="text-[10px] font-black uppercase text-slate-400 mb-2">{t.pricePack4}</h4>
+                                            <div className="text-3xl font-black mb-2">R$ 480</div>
+                                            <div className="text-[9px] font-bold text-slate-500 uppercase mb-6 tracking-widest">{t.pricePerSession.replace('{val}', '120')}</div>
+                                            <button onClick={() => handleWhatsApp(t.pricePack4)} className="w-full py-3 rounded-xl border-2 border-black font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all">{lang === 'pt' ? 'Selecionar' : 'Select'}</button>
+                                        </div>
+                                        <div className="p-8 rounded-3xl bg-green-50 border-2 border-green-500 relative transform lg:scale-105 shadow-xl flex flex-col">
+                                            <div className="absolute top-0 right-0 bg-green-500 text-black px-3 py-1 text-[8px] font-black uppercase -translate-y-1/2 translate-x-2 rotate-6">{t.recommended}</div>
+                                            <h4 className="text-[10px] font-black uppercase text-green-600 mb-2">{t.pricePack8}</h4>
+                                            <div className="text-3xl font-black mb-2">R$ 880</div>
+                                            <div className="text-[9px] font-bold text-green-700 uppercase mb-6 tracking-widest">{t.pricePerSession.replace('{val}', '110')}</div>
+                                            <button onClick={() => handleWhatsApp(t.pricePack8)} className="w-full py-3 rounded-xl bg-black text-white font-black uppercase text-[10px] hover:bg-green-600 transition-all">{lang === 'pt' ? 'Selecionar' : 'Select'}</button>
+                                        </div>
+                                        <div className="p-8 rounded-3xl bg-black text-white border border-white/10 flex flex-col">
+                                            <h4 className="text-[10px] font-black uppercase text-slate-400 mb-2">{t.pricePack12}</h4>
+                                            <h3 className="text-2xl font-black uppercase mb-4 italic text-green-400">{t.pricePack12}</h3>
+                                            <div className="text-3xl font-black mb-2">R$ 1.200</div>
+                                            <div className="text-[9px] font-bold text-slate-400 uppercase mb-6 tracking-widest">{t.pricePerSession.replace('{val}', '100')}</div>
+                                            <button onClick={() => handleWhatsApp(t.pricePack12)} className="w-full py-3 rounded-xl bg-green-500 text-black font-black uppercase text-[10px] hover:bg-white transition-all">{lang === 'pt' ? 'Selecionar' : 'Select'}</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="mt-12 p-8 border-l-4 border-green-500 bg-slate-50 italic font-black uppercase text-xs">
+                                        {t.locationNote}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </section>
+
+                    {/* FAQ */}
+                    <section className="py-24 bg-[#05080f]">
+                        <div className="max-w-3xl mx-auto px-8">
+                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic text-center mb-16 leading-none tracking-tighter">{t.faqTitle}</h2>
+                            <div className="bg-white/5 p-6 md:p-10 rounded-[2.5rem] border border-white/5">
+                                <FAQItem 
+                                    question={lang === 'pt' ? 'Como funciona o suporte?' : 'How does support work?'} 
+                                    answer={lang === 'pt' ? 'O suporte é direto via WhatsApp para tirar dúvidas rápidas sobre os exercícios do app ou ajustes de carga.' : 'Support is direct via WhatsApp for quick questions about exercises or load adjustments.'} 
+                                />
+                                <FAQItem 
+                                    question={lang === 'pt' ? 'O que é o Tecnofit?' : 'What is Tecnofit?'} 
+                                    answer={lang === 'pt' ? 'É o app profissional que eu utilizo para registrar todos os teus treinos, com vídeos e métricas.' : 'It is the professional app I use to record all your workouts, with videos and metrics.'} 
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="py-20 border-t border-white/5 text-center bg-[#05080f]">
+                        <div className="container-custom">
+                            <div className="flex justify-center items-center gap-4 mb-8">
+                                <div className="text-2xl font-black text-white italic uppercase tracking-tighter flex items-center gap-2 leading-none">
+                                    <Icon name="activity" size={24} className="text-green-400" />
+                                    GARIBALDI
+                                </div>
+                                <div className="h-6 w-px bg-white/10"></div>
+                                <div className="text-[10px] font-black uppercase text-slate-500 italic">CREF 035143</div>
+                            </div>
+                            <div className="flex justify-center gap-8 mb-10 font-black uppercase text-[10px] text-slate-400 italic">
+                                <button onClick={() => handleWhatsApp()} className="hover:text-green-400 transition-colors uppercase tracking-widest font-black">WhatsApp</button>
+                                <span className="opacity-10">•</span>
+                                <a href="mailto:contato@nicolasgaribaldi.com" className="hover:text-green-400 transition-colors uppercase tracking-widest font-black">Email</a>
+                            </div>
+                            <p className="text-slate-700 text-[9px] font-black uppercase tracking-[0.4em]">{t.footerExperience} • © 2024</p>
+                        </div>
+                    </footer>
+
+                    {/* Mobile CTA */}
+                    <div className="fixed bottom-6 left-0 w-full px-6 z-50 md:hidden">
+                        <button onClick={() => handleWhatsApp()} className="w-full bg-green-500 text-black py-4 rounded-2xl font-black text-base shadow-2xl flex items-center justify-center gap-3 uppercase italic">
+                             <Icon name="message-circle" size={20} /> {t.mobileCTA}
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
