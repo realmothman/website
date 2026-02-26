@@ -335,7 +335,7 @@
             }, [isDigital, lang]);
 
             const handleWhatsApp = (planName = "") => {
-                const phoneNumber = "5551998322391";
+                const phoneNumber = "5551998422391";
                 const context = isDigital ? t.modeDigital : t.modePersonal;
                 const message = encodeURIComponent(`Olá Nícolas! Quero saber mais sobre ${context}${planName ? ` (${planName})` : ""}.`);
                 window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
