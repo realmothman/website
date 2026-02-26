@@ -33,8 +33,6 @@
             width: max-content;
         }
 
-        .italic { font-style: italic; }
-
         .container-custom {
             width: 100%;
             max-width: 1200px;
@@ -48,17 +46,6 @@
                 padding-left: 4rem;
                 padding-right: 4rem;
             }
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            border-color: rgba(34, 197, 94, 0.3);
-            background: rgba(255, 255, 255, 0.05);
         }
 
         .switch-container {
@@ -76,7 +63,7 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
 
         .switch-btn.active {
@@ -101,50 +88,53 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+        const { useState, useEffect } = React;
 
         const translations = {
             pt: {
                 navAssessoria: "Assessoria",
                 navPersonal: "Personal 1:1",
                 navBtn: "Abrir Protocolo",
-                heroTag: "O Método do Presencial no seu celular",
+                heroTagDig: "O Método do Presencial no seu celular",
                 heroTagPers: "Atendimento exclusivo e individual",
-                heroTitle1: "ESTRATÉGIA",
-                heroTitle2: "VALIDADA.",
-                heroTitle1Pers: "TREINO 1:1",
-                heroTitle2Pers: "FEITO À MÃO.",
-                heroSub: "Tenha o acompanhamento de um treinador que atende mais de 100 alunos reais todos os dias. Ciência do movimento aplicada à sua rotina.",
+                heroT1: "ESTRATÉGIA",
+                heroT2: "VALIDADA.",
+                heroT1Pers: "TREINO 1:1",
+                heroT2Pers: "FEITO À MÃO.",
+                heroSubDig: "Tenha o acompanhamento de um treinador que atende mais de 100 alunos reais todos os dias. Ciência do movimento aplicada à sua rotina.",
                 heroSubPers: "Nada de planilha pronta. Nada genérico. Eu analiso tua rotina, limitações e objetivos para montar exatamente o que tu precisa.",
                 heroCTA: "QUERO MINHA ASSESSORIA",
                 heroCTAPers: "QUERO MEU PERSONAL",
                 marquee: ["Performance Atlética", "Reabilitação Funcional", "Treinamento Funcional"],
-                aboutTitle: "ENGENHARIA DO",
-                aboutSpan: "MOVIMENTO.",
+                aboutT1: "ENGENHARIA DO",
+                aboutT2: "MOVIMENTO.",
                 aboutSub: "Minha trajetória une o rigor técnico da Educação Física com o raciocínio lógico da Tecnologia.",
                 aboutText: "Com 6 anos de experiência prática, gerencio o treinamento de mais de 100 alunos no CT em que atuo. Utilizo meu background tecnológico para monitorar cada detalhe da sua evolução técnica. Cada treino é pensado para você evoluir de verdade.",
                 checks: ["Monitoramento por Dados", "Reabilitação Funcional", "Performance Atlética", "Treinamento Funcional"],
-                planTitle: "PLANOS DE",
-                planSpan: "EVOLUÇÃO.",
+                planT1: "PLANOS DE",
+                planT2: "EVOLUÇÃO.",
                 cardAssessment: "Avaliação Digital",
-                itemMov: "Movimento",
-                itemFull: "Mov + Antropo",
-                descAssess: "Diagnóstico biomecânico essencial para iniciarmos sua estratégia online.",
-                btnAssess: "Agendar Diagnóstico",
-                cardCoaching: "Assessoria",
-                priceCoaching: "R$ 250",
+                priceAssessment1: "R$ 120",
+                priceAssessment2: "R$ 150",
+                itemAssessment1: "Movimento",
+                itemAssessment2: "Mov + Antropo",
+                descAssessment: "Diagnóstico biomecânico essencial para iniciarmos sua estratégia online.",
+                btnAssessment: "Agendar Diagnóstico",
+                cardMain: "Assessoria",
+                priceMain: "R$ 250",
+                priceMainSub: "/mês",
                 vagas: "Vagas Limitadas",
-                coachingFeatures: ["Treino A/B Personalizado", "Troca Mensal de Planejamento", "1 Aula Online Mensal (1h)", "Suporte WhatsApp Direto"],
-                btnStart: "Quero Iniciar",
-                cardExtras: "Adicionais",
-                extraRun: "Corrida",
-                extraRunPrice: "+R$ 100",
-                extraPers: "Presencial",
-                extraPersPrice: "+R$ 100",
+                featuresMain: ["Treino A/B Personalizado", "Troca Mensal de Planejamento", "1 Aula Online Mensal (1h)", "Suporte WhatsApp Direto"],
+                btnMain: "Quero Iniciar",
+                cardExtra: "Adicionais",
+                extra1: "Corrida",
+                extra1Price: "+R$ 100",
+                extra2: "Presencial",
+                extra2Price: "+R$ 100",
                 extraDesc: "Para refinamento técnico e presencial em Porto Alegre.",
                 handmadeTitle: "TREINO 100% FEITO À MÃO 👊",
                 handmadeSub: "Nada de planilha pronta. Nada genérico. Eu analiso tua rotina, limitações e objetivos para montar exatamente o que tu precisa.",
-                inclusoTitle: "📋 O que está incluso",
+                inclusoT: "📋 O que está incluso",
                 inclusoItems: [
                     "Avaliação completa inicial",
                     "Sessões presenciais individuais",
@@ -152,99 +142,91 @@
                     "Suporte WhatsApp",
                     "Contrato + termo de responsabilidade"
                 ],
-                inclusoItem3Sub: "Vídeos, Fotos de postura e Gráficos de evolução",
-                avaliaCardTitle: "🎯 Avaliação Inicial",
-                avaliaItem1: "Movimento",
-                avaliaItem1Price: "R$ 80",
-                avaliaItem2: "Antropométrica (7 dobras)",
-                avaliaItem2Price: "R$ 60",
+                inclusoItem3Desc: "Vídeos, Fotos de postura e Gráficos de evolução",
+                avaliaCardT: "🎯 Avaliação Inicial",
+                avaliaCardP1: "R$ 80",
+                avaliaCardP2: "R$ 60",
                 avaliaOffer: "FECHE QUALQUER PACOTE NO DIA DA AVALIAÇÃO E PAGUE APENAS R$ 100",
-                pricesTitle: "💰 Valores",
-                priceNames: ["Sessão Avulsa", "Pacote 4x", "Pacote 8x", "Pacote 12x"],
-                pricePerAula: "SAI R$ {val} / AULA",
+                pricesT: "💰 Valores",
+                pricesNames: ["Sessão Avulsa", "Pacote 4x", "Pacote 8x", "Pacote 12x"],
+                pricesVals: ["R$ 120", "R$ 480", "R$ 880", "R$ 1.200"],
+                pricesSub: ["", "R$ 120 / aula", "R$ 110 / aula", "R$ 100 / aula"],
+                pricesBtn: ["Agendar", "Selecionar", "Selecionar", "Selecionar"],
                 recommended: "Frequência Ideal",
                 location: "📍 Atendo na tua casa ou na academia que tu frequenta.",
-                gymFeeNote: "Se a academia cobrar taxa de profissional externo, a gente combina certinho.",
-                travelTitle: "🚗 Deslocamento",
-                travelDesc: "Gratuito até 5km. Acréscimo de R$ 10 a R$ 50/sessão para distâncias maiores.",
-                faqTitle: "PERGUNTAS FREQUENTES.",
+                travelT: "🚗 Deslocamento",
+                travelD: "Gratuito até 5km. Acréscimo de R$ 10 a R$ 50/sessão para distâncias maiores.",
+                faqT: "PERGUNTAS FREQUENTES.",
                 faqs: [
                     { q: "Como funciona o suporte?", a: "O suporte é direto via WhatsApp para tirar dúvidas rápidas sobre os exercícios do app ou ajustes de carga." },
-                    { q: "Tenho lesão, posso participar?", a: "Sim. Como especialista em reabilitação funcional, seu treino será desenhado para fortalecer seu corpo e recuperar funcionalidade." },
                     { q: "O que é o Tecnofit?", a: "É o app profissional que eu utilizo para registrar todos os teus treinos, com vídeos, métricas e gráficos." }
                 ],
                 footer: "Porto Alegre/RS • Engenharia do Movimento",
                 mobileCTA: "INICIAR AGORA"
             },
             en: {
-                navAssessoria: "Coaching",
-                navPersonal: "Personal 1:1",
+                navAssessoria: "Online Coaching",
+                navPersonal: "", // Hidden in EN
                 navBtn: "Get Started",
-                navLabel: "Digital Coaching",
-                heroTag: "The In-Person Method, Now On Your Phone",
-                heroTagPers: "Exclusive 1-on-1 Personalized Training",
-                heroTitle1: "STRATEGY",
-                heroTitle2: "VALIDATED.",
-                heroTitle1Pers: "HANDCRAFTED",
-                heroTitle2Pers: "TRAINING.",
-                heroSub: "Coached by a pro managing 100+ daily students. Movement science applied directly to your routine.",
-                heroSubPers: "No templates. No generic plans. I analyze your profile and goals to build exactly what you need.",
+                heroTagDig: "The quality of in-person training on your phone",
+                heroTagPers: "",
+                heroT1: "VALIDATED",
+                heroT2: "STRATEGY.",
+                heroT1Pers: "",
+                heroT2Pers: "",
+                heroSubDig: "Managed by a professional coach for 100+ daily students. Movement science applied to your routine.",
+                heroSubPers: "",
                 heroCTA: "START MY COACHING",
-                heroCTAPers: "BOOK MY SESSION",
-                marquee: ["Athletic Performance", "Functional Rehab", "Strength & Conditioning"],
-                aboutTitle: "MOVEMENT",
-                aboutSpan: "ENGINEERING.",
-                aboutSub: "My career merges Physical Education technical rigor with IT logical reasoning.",
-                aboutText: "With 6 years of experience, I manage 100+ students at the facility where I work. I use my tech background to monitor every technical evolution. Every workout is meticulously crafted for real growth.",
-                checks: ["Data Monitoring", "Functional Rehab", "Performance Training", "Strength Protocols"],
-                planTitle: "EVOLUTION",
-                planSpan: "PLANS.",
-                cardAssessment: "Online Assessment",
-                itemMov: "Movement",
-                itemFull: "Full (Anthro)",
-                descAssess: "Essential biomechanical diagnosis to start your online journey.",
-                btnAssess: "Schedule Assessment",
-                cardCoaching: "Coaching",
-                priceCoaching: "$ 50",
+                heroCTAPers: "",
+                marquee: ["Athletic Performance", "Functional Rehab", "Strength & Data"],
+                aboutT1: "MOVEMENT",
+                aboutT2: "ENGINEERING.",
+                aboutSub: "Merging technical physical education with logical data reasoning.",
+                aboutText: "With 6 years of experience, I manage over 100 students daily. I use my tech background to monitor every technical detail, ensuring your growth is based on facts, not guesses.",
+                checks: ["Data-Driven Monitoring", "Functional Rehab", "Performance Training", "Strength Protocols"],
+                planT1: "EVOLUTION",
+                planT2: "PLANS.",
+                cardAssessment: "Digital Assessment",
+                priceAssessment1: "$ 30",
+                priceAssessment2: "$ 40",
+                itemAssessment1: "Movement",
+                itemAssessment2: "Mov + Anthro",
+                descAssessment: "Essential biomechanical diagnosis to start your online strategy with safety.",
+                btnAssessment: "Book Assessment",
+                cardMain: "Online Coaching",
+                priceMain: "$ 50",
+                priceMainSub: "/mo",
                 vagas: "Limited Spots",
-                coachingFeatures: ["Personalized Workout Plan", "Monthly Plan Updates", "1 Monthly Online Class (1h)", "Direct WhatsApp Support"],
-                btnStart: "Start Now",
-                cardExtras: "Add-ons",
-                extraRun: "Running Plans",
-                extraRunPrice: "+$ 20",
-                extraPers: "Consultation",
-                extraPersPrice: "+$ 30",
-                extraDesc: "For local technical refinement in Porto Alegre, BR.",
-                handmadeTitle: "100% HANDCRAFTED TRAINING 👊",
-                handmadeSub: "No templates. Pure customization. I analyze your routine and goals to build exactly what you need.",
-                inclusoTitle: "📋 What's included",
-                inclusoItems: [
-                    "Complete initial assessment",
-                    "Individual personalized sessions",
-                    "Updates via Tecnofit App",
-                    "WhatsApp Support",
-                    "Professional Contract + Waiver"
-                ],
-                inclusoItem3Sub: "Videos, Posture Tracking & Progress Charts",
-                avaliaCardTitle: "🎯 Initial Assessment",
-                avaliaItem1: "Movement Screen",
-                avaliaItem1Price: "$ 20",
-                avaliaItem2: "Anthropometry",
-                avaliaItem2Price: "$ 15",
-                avaliaOffer: "BOOK A PACKAGE TODAY AND PAY ONLY $ 25 FOR THE ASSESSMENT",
-                pricesTitle: "💰 Pricing",
-                priceNames: ["Single Session", "4-Session Pack", "8-Session Pack", "12-Session Pack"],
-                pricePerAula: "$ {val} / CLASS",
-                recommended: "Best Frequency",
-                location: "📍 At your home or your private gym.",
-                gymFeeNote: "Gym fees for external trainers are discussed during onboarding.",
-                travelTitle: "🚗 Travel Fees",
-                travelDesc: "Free within 5km of Porto Alegre. Extra $5 - $15 for longer distances.",
-                faqTitle: "FREQUENT QUESTIONS.",
+                featuresMain: ["Personalized Workout Plan", "Monthly Plan Updates", "1 Monthly Online Class (1h)", "Direct WhatsApp Support"],
+                btnMain: "Get Started",
+                cardExtra: "Add-ons",
+                extra1: "Running Plans",
+                extra1Price: "+$ 20",
+                extra2: "Consultation",
+                extra2Price: "+$ 30",
+                extraDesc: "Technical refinement sessions (Porto Alegre only).",
+                handmadeTitle: "",
+                handmadeSub: "",
+                inclusoT: "",
+                inclusoItems: [],
+                inclusoItem3Desc: "",
+                avaliaCardT: "",
+                avaliaCardP1: "",
+                avaliaCardP2: "",
+                avaliaOffer: "",
+                pricesT: "",
+                pricesNames: [],
+                pricesVals: [],
+                pricesSub: [],
+                pricesBtn: [],
+                recommended: "",
+                location: "",
+                travelT: "",
+                travelD: "",
+                faqT: "FREQUENT QUESTIONS.",
                 faqs: [
-                    { q: "How does support work?", a: "Direct WhatsApp contact for quick form checks, load adjustments, and troubleshooting." },
-                    { q: "I have an injury, can I join?", a: "Yes. As a rehab specialist, I focus on structural resilience to help you regain functionality safely." },
-                    { q: "What is Tecnofit?", a: "It's the premium app I use to deliver your plans, tracking videos and progress charts." }
+                    { q: "How does support work?", a: "Direct WhatsApp contact for quick form checks, load adjustments, and routine support." },
+                    { q: "What is Tecnofit?", a: "It's the premium app I use to track your workouts, videos, and progress metrics." }
                 ],
                 footer: "Porto Alegre, BR • Movement Engineering",
                 mobileCTA: "START NOW"
@@ -252,45 +234,47 @@
         };
 
         const App = () => {
-            const [isScrolled, setIsScrolled] = useState(false);
-            const [isDigital, setIsDigital] = useState(true);
             const [lang, setLang] = useState('pt');
+            const [isDigital, setIsDigital] = useState(true);
+            const [isScrolled, setIsScrolled] = useState(false);
 
-            // Garantir que ao mudar para EN, mude para Digital e remova o Personal
-            useEffect(() => {
-                if (lang === 'en') setIsDigital(true);
-            }, [lang]);
+            const t = translations[lang];
 
             useEffect(() => {
                 const handleScroll = () => setIsScrolled(window.scrollY > 50);
                 window.addEventListener('scroll', handleScroll);
-                if (window.lucide) window.lucide.createIcons();
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
+            // Anti-crash: Re-trigger Lucide after every render
             useEffect(() => {
-                if (window.lucide) window.lucide.createIcons();
-            }, [isDigital, lang]);
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            });
 
-            const t = useMemo(() => translations[lang], [lang]);
+            // Force Digital mode when changing to EN
+            const switchLang = (l) => {
+                if (l === 'en') setIsDigital(true);
+                setLang(l);
+            };
 
             const handleWhatsApp = (p = "") => {
                 const num = "5551998422391";
-                const ctx = isDigital ? t.modeDigital : t.modePersonal;
+                const ctx = isDigital ? t.navAssessoria : t.navPersonal;
                 const msg = encodeURIComponent(`Olá Nícolas! Quero saber mais sobre ${ctx}${p ? ` (${p})` : ""}.`);
                 window.open(`https://wa.me/${num}?text=${msg}`, '_blank');
             };
 
             return (
-                <div className="min-h-screen selection:bg-green-400 selection:text-black scroll-smooth">
-                    
+                <div className="min-h-screen selection:bg-green-400 selection:text-black scroll-smooth bg-[#05080f]">
                     {/* Header */}
-                    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-[#05080f]/95 backdrop-blur-xl py-4 shadow-2xl border-b border-white/5' : 'bg-transparent py-6 md:py-8'}`}>
+                    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-[#05080f]/95 backdrop-blur-xl py-4 border-b border-white/5 shadow-2xl' : 'bg-transparent py-6 md:py-8'}`}>
                         <div className="container-custom flex justify-between items-center">
                             <div className="flex items-center gap-2">
                                 <i data-lucide="activity" className="text-green-400 w-6 h-6"></i>
                                 <div className="flex flex-col">
-                                    <span className="text-lg font-black tracking-tighter text-white leading-none uppercase">GARIBALDI</span>
+                                    <span className="text-lg font-black text-white leading-none uppercase tracking-tighter">GARIBALDI</span>
                                     <span className="text-[7px] font-black tracking-[0.3em] text-green-400 uppercase leading-none mt-1">
                                         {isDigital ? t.navAssessoria : t.navPersonal}
                                     </span>
@@ -305,13 +289,13 @@
                                     </div>
                                 )}
                                 <div className="flex gap-2 bg-white/5 px-3 py-2 rounded-full border border-white/10">
-                                    <button onClick={() => setLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
+                                    <button onClick={() => switchLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
                                     <span className="opacity-10 text-white">|</span>
-                                    <button onClick={() => setLang('en')} className={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</button>
+                                    <button onClick={() => switchLang('en')} className={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</button>
                                 </div>
                             </div>
 
-                            <button onClick={() => handleWhatsApp()} className="bg-green-500 hover:bg-white text-black px-4 py-2 md:px-6 md:py-2.5 rounded-full font-black text-[10px] md:text-xs transition-all uppercase flex items-center gap-2 shadow-lg shadow-green-500/20">
+                            <button onClick={() => handleWhatsApp()} className="bg-green-500 hover:bg-white text-black px-6 py-2.5 rounded-full font-black text-xs transition-all uppercase flex items-center gap-2 shadow-lg shadow-green-500/20">
                                 {t.navBtn} <i data-lucide="chevron-right" className="w-3 h-3"></i>
                             </button>
                         </div>
@@ -319,10 +303,9 @@
 
                     {/* Hero */}
                     <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
-                        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-green-500/5 to-transparent"></div>
-                        <div className="container-custom text-center md:text-left grid md:grid-cols-12 items-center gap-12">
+                        <div className="container-custom grid md:grid-cols-12 items-center gap-12 text-center md:text-left">
                             <div className="md:col-span-12 lg:col-span-10">
-                                <div className="lg:hidden mb-8 flex flex-col gap-4 items-center md:items-start">
+                                <div className="lg:hidden mb-8 flex flex-col gap-4 items-center">
                                     {lang === 'pt' && (
                                         <div className="switch-container">
                                             <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
@@ -330,29 +313,29 @@
                                         </div>
                                     )}
                                     <div className="flex gap-4">
-                                        <button onClick={() => setLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
-                                        <button onClick={() => setLang('en')} className={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</button>
+                                        <button onClick={() => switchLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
+                                        <button onClick={() => switchLang('en')} className={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</button>
                                     </div>
                                 </div>
-                                
-                                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-6 backdrop-blur-sm">
+
+                                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-6">
                                     <span className="text-[10px] font-black tracking-widest uppercase text-green-400 italic">
-                                        {isDigital ? t.heroTag : t.heroTagPers}
+                                        {isDigital ? t.heroTagDig : t.heroTagPers}
                                     </span>
                                 </div>
 
                                 <h1 className="text-4xl sm:text-6xl lg:text-[90px] font-black text-white mb-6 leading-[1] tracking-tighter uppercase italic">
-                                    {isDigital ? t.heroTitle1 : t.heroTitle1Pers}<br/>
+                                    {isDigital ? t.heroT1 : t.heroT1Pers}<br/>
                                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-300">
-                                        {isDigital ? t.heroTitle2 : t.heroTitle2Pers}
+                                        {isDigital ? t.heroT2 : t.heroT2Pers}
                                     </span>
                                 </h1>
 
-                                <p className="text-base md:text-xl text-slate-400 max-w-2xl mb-10 font-bold leading-snug">
-                                    {isDigital ? t.heroSub : t.heroSubPers}
+                                <p className="text-base md:text-xl text-slate-400 max-w-2xl mb-10 font-bold">
+                                    {isDigital ? t.heroSubDig : t.heroSubPers}
                                 </p>
 
-                                <button onClick={() => handleWhatsApp()} className="w-full sm:w-auto bg-white text-black px-10 py-5 rounded-2xl font-black text-lg hover:bg-green-500 transition-all shadow-2xl flex items-center justify-center gap-3 transform hover:-translate-y-1">
+                                <button onClick={() => handleWhatsApp()} className="w-full sm:w-auto bg-white text-black px-10 py-5 rounded-2xl font-black text-lg hover:bg-green-500 transition-all shadow-2xl flex items-center justify-center gap-3">
                                     {isDigital ? t.heroCTA : t.heroCTAPers} <i data-lucide="arrow-right" className="w-5 h-5"></i>
                                 </button>
                             </div>
@@ -376,20 +359,16 @@
                     </div>
 
                     {/* Sobre */}
-                    <section className="py-24 relative overflow-hidden bg-[#070b14]">
+                    <section className="py-24 bg-[#070b14]">
                         <div className="container-custom grid md:grid-cols-12 gap-12 items-center">
                             <div className="md:col-span-5 relative">
-                                <div className="aspect-[4/5] bg-slate-900 rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl">
-                                    <img src="https://i.imgur.com/E2auHBT.jpg" className="w-full h-full object-cover" alt="Nícolas Garibaldi" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent to-transparent opacity-60"></div>
-                                </div>
-                                <div className="absolute -bottom-6 -right-6 bg-green-500 text-black p-6 rounded-3xl hidden md:block shadow-2xl">
-                                    <div className="text-3xl font-black leading-none italic uppercase">+100 ALUNOS</div>
-                                    <div className="text-[10px] font-bold tracking-widest uppercase">{lang === 'pt' ? 'Monitorados' : 'Students'}</div>
+                                <div className="aspect-[4/5] bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl">
+                                    <img src="https://i.imgur.com/E2auHBT.jpg" className="w-full h-full object-cover" alt="Nicolas" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent opacity-60"></div>
                                 </div>
                             </div>
                             <div className="md:col-span-7">
-                                <h2 className="text-3xl md:text-6xl font-black text-white leading-none uppercase italic mb-8 underline decoration-green-400 decoration-4">{t.aboutTitle} <br/>{t.aboutSpan}</h2>
+                                <h2 className="text-3xl md:text-6xl font-black text-white leading-none uppercase italic mb-8 underline decoration-green-400 decoration-4">{t.aboutT1} <br/>{t.aboutT2}</h2>
                                 <p className="text-lg text-slate-300 font-medium mb-6">{t.aboutSub}</p>
                                 <p className="text-sm text-slate-400 leading-relaxed mb-8">{t.aboutText}</p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 uppercase text-[10px] font-black tracking-widest">
@@ -404,10 +383,10 @@
                     </section>
 
                     {/* Planos */}
-                    <section id="planos" className="py-24 bg-white text-black rounded-t-[3rem] md:rounded-t-[5rem] shadow-2xl relative z-30">
+                    <section className="py-24 bg-white text-black rounded-t-[3rem] md:rounded-t-[5rem] shadow-2xl relative z-30">
                         <div className="container-custom">
                             <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
-                                <h2 className="text-4xl md:text-8xl font-black uppercase italic leading-none tracking-tighter text-center md:text-left">{t.planTitle} <br/><span className="text-green-600">{t.planSpan}</span></h2>
+                                <h2 className="text-4xl md:text-8xl font-black uppercase italic leading-none text-center md:text-left">{t.planT1} <br/><span className="text-green-600">{t.planT2}</span></h2>
                                 {lang === 'pt' && (
                                     <div className="switch-container">
                                         <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.modeDigital}</button>
@@ -416,101 +395,102 @@
                                 )}
                             </div>
 
-                            <div key={`${lang}-${isDigital}`}>
-                                {isDigital ? (
-                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                        <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col">
-                                            <h3 className="text-2xl font-black uppercase mb-4 tracking-tighter">{t.cardAssessment}</h3>
-                                            <div className="space-y-4 mb-10 border-b border-black/10 pb-6">
-                                                <div className="flex justify-between items-end"><span>{t.itemMov}</span><span className="text-2xl font-black text-green-600 leading-none">{lang === 'pt' ? 'R$ 120' : '$ 30'}</span></div>
-                                                <div className="flex justify-between items-end"><span>{t.itemFull}</span><span className="text-2xl font-black text-green-600 leading-none">{lang === 'pt' ? 'R$ 150' : '$ 40'}</span></div>
-                                            </div>
-                                            <p className="text-[10px] font-black uppercase text-slate-500 mb-6 italic">{t.descAssess}</p>
-                                            <button onClick={() => handleWhatsApp(t.cardAssessment)} className="mt-auto w-full py-4 rounded-xl border-2 border-black font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all">{t.btnAssess}</button>
+                            {isDigital ? (
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                    {/* Digital Cards */}
+                                    <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col group hover:border-black transition-all">
+                                        <h3 className="text-2xl font-black uppercase mb-4">{t.cardAssessment}</h3>
+                                        <div className="space-y-4 mb-10 border-b border-black/10 pb-6 font-black uppercase text-[10px]">
+                                            <div className="flex justify-between items-end"><span>{t.itemAssessment1}</span><span className="text-2xl text-green-600 leading-none">{t.priceAssessment1}</span></div>
+                                            <div className="flex justify-between items-end"><span>{t.itemAssessment2}</span><span className="text-2xl text-green-600 leading-none">{t.priceAssessment2}</span></div>
                                         </div>
-                                        <div className="p-10 rounded-[2.5rem] bg-black text-white flex flex-col relative shadow-2xl lg:scale-105 z-10">
-                                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-black px-6 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{t.vagas}</div>
-                                            <h3 className="text-3xl font-black uppercase mb-4 italic leading-none">{t.cardCoaching}</h3>
-                                            <div className="text-5xl font-black mb-10 text-green-400 leading-none tracking-tighter">{t.priceCoaching}<span className="text-sm font-bold text-slate-400">{t.digitalPriceSub}</span></div>
-                                            <ul className="space-y-4 mb-10 text-[10px] font-black uppercase">
-                                                {t.coachingFeatures.map((f, i) => (
-                                                    <li key={i} className="flex items-center gap-2"><i data-lucide="check" className="text-green-500 w-4 h-4"></i> {f}</li>
+                                        <p className="text-[10px] font-black uppercase text-slate-500 mb-6 italic">{t.descAssessment}</p>
+                                        <button onClick={() => handleWhatsApp(t.cardAssessment)} className="mt-auto w-full py-4 rounded-xl border-2 border-black font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all">{t.btnAssessment}</button>
+                                    </div>
+
+                                    <div className="p-10 rounded-[2.5rem] bg-black text-white flex flex-col relative shadow-2xl lg:scale-105 z-10 border border-white/5">
+                                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-black px-6 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">{t.vagas}</div>
+                                        <h3 className="text-3xl font-black uppercase mb-4 italic leading-none">{t.cardMain}</h3>
+                                        <div className="text-5xl font-black mb-10 text-green-400 leading-none tracking-tighter">{t.priceMain}<span className="text-sm font-bold text-slate-400">{t.priceMainSub}</span></div>
+                                        <ul className="space-y-4 mb-10 text-[10px] font-black uppercase">
+                                            {t.featuresMain.map((f, i) => <li key={i} className="flex items-center gap-2"><i data-lucide="check" className="text-green-500 w-4 h-4"></i> {f}</li>)}
+                                        </ul>
+                                        <button onClick={() => handleWhatsApp(t.cardMain)} className="w-full bg-green-500 text-black py-5 rounded-2xl font-black text-lg uppercase italic hover:bg-white transition-all">{t.btnMain}</button>
+                                    </div>
+
+                                    <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col">
+                                        <h3 className="text-2xl font-black uppercase mb-8">{t.cardExtra}</h3>
+                                        <div className="space-y-4 mb-10 font-black uppercase text-[10px]">
+                                            <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{t.extra1}</span><span className="text-green-600">{t.extra1Price}</span></div>
+                                            <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{t.extra2}</span><span className="text-green-600">{t.extra2Price}</span></div>
+                                        </div>
+                                        <p className="text-[10px] text-slate-400 uppercase font-black italic">{t.extraDesc}</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                /* Personal 1:1 Content (Only for PT) */
+                                <div className="text-black">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                                        <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-black/5">
+                                            <h3 className="text-2xl font-black uppercase italic mb-6 leading-none">{t.handmadeTitle}</h3>
+                                            <p className="text-slate-600 font-medium mb-8 text-sm leading-relaxed">{t.handmadeSub}</p>
+                                            <h4 className="text-xs font-black uppercase mb-4 text-slate-400">{t.inclusoT}</h4>
+                                            <ul className="space-y-4">
+                                                {t.inclusoItems.map((it, i) => (
+                                                    <li key={i} className="flex gap-4 items-start">
+                                                        <i data-lucide="check" className="text-green-600 w-5 h-5"></i>
+                                                        <div>
+                                                            <div className="text-[11px] font-black uppercase">{it}</div>
+                                                            {i === 2 && <div className="text-[9px] text-slate-400 font-black uppercase">{t.inclusoItem3Desc}</div>}
+                                                        </div>
+                                                    </li>
                                                 ))}
                                             </ul>
-                                            <button onClick={() => handleWhatsApp(t.cardCoaching)} className="w-full bg-green-500 text-black py-5 rounded-2xl font-black text-lg uppercase italic hover:bg-white transition-all">{t.btnStart}</button>
                                         </div>
-                                        <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col">
-                                            <h3 className="text-2xl font-black uppercase mb-8 tracking-tighter">{t.cardExtras}</h3>
-                                            <div className="space-y-4 mb-10 font-black uppercase text-[10px]">
-                                                <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{t.extraRun}</span><span className="text-green-600">{t.extraRunPrice}</span></div>
-                                                <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{t.extraPers}</span><span className="text-green-600">{t.extraPersPrice}</span></div>
+                                        <div className="space-y-6">
+                                            <div className="bg-black text-white p-10 rounded-[2.5rem] shadow-2xl border border-white/5">
+                                                <h3 className="text-2xl font-black uppercase italic mb-6 text-green-400">{t.avaliaCardT}</h3>
+                                                <div className="space-y-4 font-black uppercase text-[10px]">
+                                                    <div className="flex justify-between border-b border-white/10 pb-2"><span>{t.avaliaItem1}</span><span>{t.avaliaCardP1}</span></div>
+                                                    <div className="flex justify-between border-b border-white/10 pb-2"><span>{t.avaliaItem2}</span><span>{t.avaliaCardP2}</span></div>
+                                                    <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-xl mt-4 text-green-400 italic">{t.avaliaOffer}</div>
+                                                </div>
                                             </div>
-                                            <p className="text-[10px] text-slate-400 uppercase font-black italic">{t.extraDesc}</p>
+                                            <div className="bg-slate-100 p-8 rounded-[2rem] flex gap-4 items-center">
+                                                <i data-lucide="map-pin" className="w-8 h-8 text-black"></i>
+                                                <div className="text-[10px] font-black uppercase text-slate-500">
+                                                    <span className="block text-black mb-1">{t.location}</span>{t.travelD}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                ) : (
-                                    <div className="text-black">
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-                                            <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-black/5">
-                                                <h3 className="text-2xl font-black uppercase italic mb-6 leading-none">{t.handmadeTitle}</h3>
-                                                <p className="text-slate-600 font-medium mb-8 text-sm">{t.handmadeSub}</p>
-                                                <h4 className="text-xs font-black uppercase mb-4 text-slate-400">{t.inclusoTitle}</h4>
-                                                <ul className="space-y-4">
-                                                    {t.inclusoItems.map((it, i) => (
-                                                        <li key={i} className="flex gap-4 items-start">
-                                                            <i data-lucide="check" className="text-green-600 w-5 h-5"></i>
-                                                            <div>
-                                                                <div className="text-[11px] font-bold uppercase tracking-tight">{it}</div>
-                                                                {i === 2 && <div className="text-[9px] text-slate-400 font-black uppercase">{t.inclusoItem3Sub}</div>}
-                                                            </div>
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                    <h3 className="text-center text-3xl font-black uppercase italic mb-10">{t.pricesT}</h3>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        {t.pricesNames.map((name, i) => (
+                                            <div key={i} className={`p-8 rounded-3xl flex flex-col ${i === 2 ? 'bg-green-50 border-2 border-green-500 shadow-xl' : 'bg-slate-50 border border-black/5'} ${i === 3 ? 'bg-black text-white' : ''}`}>
+                                                <h4 className="text-[10px] font-black uppercase text-slate-400 mb-2">{name}</h4>
+                                                <div className={`text-3xl font-black mb-2 ${i === 3 ? 'text-green-400' : ''}`}>{t.pricesVals[i]}</div>
+                                                {i > 0 && <div className="text-[9px] font-bold text-slate-500 uppercase mb-6">{t.pricesSub[i]}</div>}
+                                                <button onClick={() => handleWhatsApp(name)} className={`mt-auto w-full py-3 rounded-xl font-black uppercase text-[10px] border-2 transition-all ${i === 3 ? 'bg-green-500 border-green-500 text-black' : 'border-black hover:bg-black hover:text-white'}`}>{t.pricesBtn[i]}</button>
                                             </div>
-                                            <div className="space-y-6">
-                                                <div className="bg-black text-white p-10 rounded-[2.5rem] shadow-2xl">
-                                                    <h3 className="text-2xl font-black uppercase italic mb-6 text-green-400">{t.avaliaCardTitle}</h3>
-                                                    <div className="space-y-4">
-                                                        <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[10px] font-black uppercase">{t.avaliaItem1}</span><span className="font-black">{t.avaliaItem1Price}</span></div>
-                                                        <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[10px] font-black uppercase">{t.avaliaItem2}</span><span className="font-black">{t.avaliaItem2Price}</span></div>
-                                                        <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-xl mt-4"><p className="text-xs font-black uppercase text-green-400 leading-tight">{t.avaliaOffer}</p></div>
-                                                    </div>
-                                                </div>
-                                                <div className="bg-slate-100 p-8 rounded-[2rem] border border-black/5 flex gap-4 items-center">
-                                                    <i data-lucide="car" className="text-black w-6 h-6"></i>
-                                                    <div className="text-[10px] font-bold text-slate-500 uppercase leading-snug">
-                                                        <span className="block text-black font-black mb-1">{t.travelTitle}</span>
-                                                        {t.travelDesc}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <h3 className="text-center text-3xl font-black uppercase italic mb-10">{t.pricesTitle}</h3>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                                            {[t.priceSingleVal, t.pricePack4Val, t.pricePack8Val, t.pricePack12Val].map((val, i) => (
-                                                <div key={i} className={`p-8 rounded-3xl flex flex-col ${i === 2 ? 'bg-green-50 border-2 border-green-500 shadow-xl' : 'bg-slate-50 border border-black/5'} ${i === 3 ? 'bg-black text-white' : ''}`}>
-                                                    <h4 className={`text-[10px] font-black uppercase mb-2 ${i === 3 ? 'text-slate-400' : 'text-slate-400'}`}>{t.priceNames[i]}</h4>
-                                                    <div className={`text-3xl font-black mb-2 ${i === 3 ? 'text-green-400' : ''}`}>{val}</div>
-                                                    {i > 0 && <div className="text-[9px] font-bold text-slate-500 uppercase mb-6">{t.pricePerAula.replace('{val}', [0, 120, 110, 100][i])}</div>}
-                                                    <button onClick={() => handleWhatsApp(t.priceNames[i])} className={`mt-auto w-full py-3 rounded-xl font-black uppercase text-[10px] transition-all border-2 ${i === 3 ? 'bg-green-500 border-green-500 text-black' : 'border-black hover:bg-black hover:text-white'}`}>{lang === 'pt' ? 'Selecionar' : 'Select'}</button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className="mt-12 p-8 border-l-4 border-green-500 bg-slate-50 italic font-black uppercase text-xs text-black">
-                                            {t.location} <br/> <span className="text-slate-500 text-[10px]">{t.gymFeeNote}</span>
-                                        </div>
+                                        ))}
                                     </div>
-                                )}
-                            </div>
+                                </div>
+                            )}
                         </div>
                     </section>
 
                     {/* FAQ */}
                     <section className="py-24 bg-[#05080f]">
-                        <div className="max-w-3xl mx-auto px-8 text-center md:text-left">
-                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic mb-16 leading-none tracking-tighter text-center">{t.faqTitle}</h2>
+                        <div className="max-w-3xl mx-auto px-8">
+                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic text-center mb-16 tracking-tighter">{t.faqT}</h2>
                             <div className="bg-white/5 p-6 md:p-10 rounded-[2.5rem] border border-white/5">
-                                {t.faqs.map((f, i) => <FAQItem key={i} question={f.q} answer={f.a} />)}
+                                {t.faqs.map((f, i) => (
+                                    <div key={i} className="border-b border-white/5 last:border-0 py-6">
+                                        <h4 className="text-base md:text-lg font-bold text-white uppercase mb-2 tracking-tight">{f.q}</h4>
+                                        <p className="text-slate-400 text-sm font-medium leading-relaxed">{f.a}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </section>
@@ -524,12 +504,12 @@
                                 <div className="h-6 w-px bg-white/10"></div>
                                 <div className="text-[10px] font-black uppercase text-slate-500">CREF 035143</div>
                             </div>
-                            <div className="flex justify-center gap-8 mb-10 font-black uppercase text-[10px] text-slate-400 italic">
-                                <button onClick={() => handleWhatsApp()} className="hover:text-green-400">WhatsApp</button>
+                            <div className="flex justify-center gap-8 mb-10 font-black uppercase text-[10px] text-slate-400">
+                                <button onClick={() => handleWhatsApp()} className="hover:text-green-400 transition-colors">WhatsApp</button>
                                 <span className="opacity-10">•</span>
-                                <a href="mailto:contato@nicolasgaribaldi.com" className="hover:text-green-400">Email</a>
+                                <a href="mailto:contato@nicolasgaribaldi.com" className="hover:text-green-400 transition-colors">Email</a>
                             </div>
-                            <p className="text-slate-700 text-[9px] font-black uppercase tracking-[0.4em]">{t.footer} • © 2024</p>
+                            <p className="text-slate-700 text-[9px] font-black uppercase tracking-[0.4em] italic">{t.footer} • © 2024</p>
                         </div>
                     </footer>
 
