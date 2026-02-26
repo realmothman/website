@@ -101,7 +101,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useMemo } = React;
 
         const translations = {
             pt: {
@@ -200,94 +200,94 @@
             en: {
                 navAssessoria: "Coaching",
                 navPersonal: "Personal 1:1",
-                navBtn: "Open Protocol",
+                navBtn: "Start Coaching",
                 navLabel: "Digital Coaching",
-                heroTagDigital: "The in-person method, now on your phone",
-                heroTagPersonal: "Exclusive and individual training",
+                heroTagDigital: "The In-Person Method, Now On Your Phone",
+                heroTagPersonal: "Exclusive 1-on-1 Personalized Training",
                 heroTitle1: "STRATEGY",
                 heroTitle2: "VALIDATED.",
-                heroTitle1Pers: "1:1 TRAINING",
-                heroTitle2Pers: "HANDCRAFTED.",
-                heroSubDigital: "Get coached by a trainer who manages 100+ real students daily. Movement science applied to your routine.",
-                heroSubPersonal: "No ready-made templates. Nothing generic. I analyze your routine, limitations, and goals to build exactly what you need.",
-                heroCTA: "GET MY COACHING",
-                heroCTAPers: "GET MY PERSONAL TRAINER",
+                heroTitle1Pers: "HANDCRAFTED",
+                heroTitle2Pers: "TRAINING.",
+                heroSubDigital: "Get coached by a professional managing 100+ students daily. Movement science applied directly to your routine.",
+                heroSubPersonal: "No templates. No generic plans. I analyze your routine, limitations, and goals to build exactly what you need.",
+                heroCTA: "START MY COACHING",
+                heroCTAPers: "BOOK MY SESSION",
                 marquee1: "Athletic Performance",
                 marquee2: "Functional Rehab",
-                marquee3: "Functional Training",
+                marquee3: "Strength & Conditioning",
                 aboutTitle: "MOVEMENT",
                 aboutTitleSpan: "ENGINEERING.",
-                aboutSub: "My career combines Physical Education technical rigor with IT logical reasoning.",
-                aboutText: "With 6 years of hands-on experience, I manage the training of over 100 students at the facility where I work. I use my tech background to monitor every detail of your technical evolution. Every workout is designed for you to truly evolve.",
+                aboutSub: "My career merges Physical Education rigor with logical Data & Tech reasoning.",
+                aboutText: "With 6 years of hands-on experience, I manage 100+ students at my current training facility. I leverage my tech background to monitor every detail of your technical evolution. Every workout is meticulously crafted for real growth.",
                 aboutCheck1: "Data Monitoring",
                 aboutCheck2: "Functional Rehab",
-                aboutCheck3: "Athletic Performance",
-                aboutCheck4: "Functional Training",
+                aboutCheck3: "Performance Training",
+                aboutCheck4: "Strength Protocols",
                 planTitle: "EVOLUTION",
                 planTitleSpan: "PLANS.",
                 modeLabel: "Switch Mode",
-                modeDigital: "Digital",
-                modePersonal: "Personal 1:1",
-                digitalCard1: "Digital Assessment",
+                modeDigital: "Online",
+                modePersonal: "In-person",
+                digitalCard1: "Online Assessment",
                 digitalCard1Item1: "Movement",
                 digitalCard1Price1: "$ 30",
                 digitalCard1Item2: "Mov + Anthro",
                 digitalCard1Price2: "$ 40",
-                digitalCard1Desc: "Essential biomechanical diagnosis to start your online strategy.",
-                digitalCard1Btn: "Schedule Diagnosis",
-                digitalCard2: "Coaching",
+                digitalCard1Desc: "Essential biomechanical diagnosis to start your online journey.",
+                digitalCard1Btn: "Schedule Assessment",
+                digitalCard2: "Digital Coaching",
                 digitalPrice: "$ 50",
                 digitalPriceSub: "/mo",
                 digitalVagas: "Limited Spots",
-                digitalCheck1: "Personalized A/B Training",
-                digitalCheck2: "Monthly Planning Update",
+                digitalCheck1: "Personalized Workout Plan",
+                digitalCheck2: "Monthly Plan Updates",
                 digitalCheck3: "1 Monthly Online Class (1h)",
                 digitalCheck4: "Direct WhatsApp Support",
                 digitalCTA: "Start Now",
-                digitalCard3: "Add-ons",
-                digitalExtra1: "Running",
+                digitalCard3: "Extras",
+                digitalExtra1: "Running Plans",
                 digitalExtra1Price: "+$ 20",
-                digitalExtra2: "In-person",
-                digitalExtra2Price: "+$ 25",
-                digitalExtraDesc: "For technical refinement in Porto Alegre.",
+                digitalExtra2: "In-Person Session",
+                digitalExtra2Price: "+$ 30",
+                digitalExtraDesc: "For local technical refinement (Porto Alegre, BR).",
                 personalHandmade: "100% HANDCRAFTED TRAINING 👊",
-                personalHandmadeSub: "No ready-made templates. Nothing generic. I analyze your routine, limitations, and goals to build exactly what you need. Each session is built for you to truly evolve.",
+                personalHandmadeSub: "Zero templates. Pure customization. I analyze your profile and routine to build exactly what your body requires to evolve sustainably.",
                 inclusoTitle: "📋 What's included",
                 incluso1: "Complete initial assessment",
-                incluso2: "Individual in-person sessions",
-                incluso3: "Updated training on Tecnofit app",
+                incluso2: "Individual personalized sessions",
+                incluso3: "Updates via Tecnofit App",
                 incluso4: "WhatsApp Support",
-                incluso5: "Professional Contract + Waiver",
-                inclusoItem3Desc: "Videos, Posture Photos and Progress Charts",
+                incluso5: "Contract + Professional Waiver",
+                inclusoItem3Desc: "Videos, Posture Tracking & Progress Charts",
                 avaliaCardTitle: "🎯 Initial Assessment",
-                avaliaCardItem1: "Movement",
-                avaliaCardPrice1: "$ 20",
-                avaliaCardItem2: "Anthro (7 skinfolds)",
+                avaliaCardItem1: "Movement Screen",
+                avaliaCardPrice1: "$ 15",
+                avaliaCardItem2: "Anthropometry (Body Fat)",
                 avaliaCardPrice2: "$ 15",
-                avaliaOffer: "CLOSE A PACKAGE TODAY AND PAY ONLY $ 25 FOR THE ASSESSMENT",
+                avaliaOffer: "BOOK A PACKAGE TODAY AND PAY ONLY $ 20 FOR THE ASSESSMENT",
                 pricesTitle: "💰 Pricing",
                 priceSingle: "Single Session",
-                priceSingleVal: "$ 35",
-                pricePack4: "4x Package",
-                pricePack4Val: "$ 140",
-                pricePack8: "8x Package",
-                pricePack8Val: "$ 260",
-                pricePack12: "12x Package",
-                pricePack12Val: "$ 360",
+                priceSingleVal: "$ 30",
+                pricePack4: "4-Session Pack",
+                pricePack4Val: "$ 110",
+                pricePack8: "8-Session Pack",
+                pricePack8Val: "$ 200",
+                pricePack12: "12-Session Pack",
+                pricePack12Val: "$ 280",
                 pricePerSession: "$ {val} / CLASS",
-                recommended: "Ideal Frequency",
-                locationNote: "📍 I attend at your home or your gym.",
-                locationGymFee: "If the gym charges a fee for external trainers, we will arrange it together.",
-                carTitle: "🚗 Travel",
-                carDesc: "Free up to 5km. Extra $5 to$ 15/session for longer distances.",
+                recommended: "Best Frequency",
+                locationNote: "📍 At your home or your private gym.",
+                locationGymFee: "Gym access fees for external trainers are discussed during onboarding.",
+                carTitle: "🚗 Travel Fees",
+                carDesc: "Free within 5km of Porto Alegre base. Extra $2 - $10 for longer distances.",
                 faqTitle: "FREQUENT QUESTIONS.",
                 faqQ1: "How does support work?",
-                faqA1: "Direct support via WhatsApp for quick questions about app exercises or load adjustments.",
+                faqA1: "Direct WhatsApp communication for quick form checks, load adjustments, and routine troubleshooting.",
                 faqQ2: "I have an injury, can I join?",
-                faqA2: "Yes. As a functional rehab specialist, your training will be designed to strengthen your body and recover functionality.",
+                faqA2: "Absolutely. As a rehab specialist, I focus on building structural resilience to help you regain functionality safely.",
                 faqQ3: "What is Tecnofit?",
-                faqA3: "It's the professional app I use to track all your workouts, including videos, metrics, and charts.",
-                footerExperience: "Porto Alegre/RS • Movement Engineering",
+                faqA3: "It's the premium app I use to deliver your plans, tracking sets, reps, videos, and long-term progress.",
+                footerExperience: "Porto Alegre, BR • Movement Engineering",
                 mobileCTA: "START NOW"
             }
         };
@@ -319,8 +319,8 @@
             const [isDigital, setIsDigital] = useState(true);
             const [lang, setLang] = useState('pt');
 
-            // Pre-flight check para evitar erros de renderização
-            const t = translations[lang] || translations['pt'];
+            // Memoized translation object to prevent black screen errors
+            const t = useMemo(() => translations[lang], [lang]);
 
             useEffect(() => {
                 const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -329,10 +329,13 @@
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
-            // Re-inicializa ícones ao mudar estado
+            // Ensure mode is Online when language is English
             useEffect(() => {
+                if (lang === 'en') {
+                    setIsDigital(true);
+                }
                 if (window.lucide) window.lucide.createIcons();
-            }, [isDigital, lang]);
+            }, [lang, isDigital]);
 
             const handleWhatsApp = (planName = "") => {
                 const phoneNumber = "5551998422391";
@@ -350,18 +353,20 @@
                             <div className="flex items-center gap-2">
                                 <Icon name="activity" size={24} className="text-green-400" />
                                 <div className="flex flex-col">
-                                    <span className="text-lg font-black tracking-tighter text-white leading-none uppercase">GARIBALDI</span>
+                                    <span className="text-lg font-black tracking-tighter text-white leading-none uppercase tracking-tight">GARIBALDI</span>
                                     <span className="text-[7px] font-black tracking-[0.3em] text-green-400 uppercase leading-none mt-1">
-                                        {isDigital ? t.navAssessoria : t.navPersonal}
+                                        {isDigital ? t.modeDigital : t.modePersonal}
                                     </span>
                                 </div>
                             </div>
 
                             <div className="hidden lg:flex items-center gap-6">
-                                <div className="switch-container">
-                                    <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
-                                    <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
-                                </div>
+                                {lang === 'pt' && (
+                                    <div className="switch-container">
+                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
+                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
+                                    </div>
+                                )}
                                 <div className="flex gap-2 bg-white/5 px-3 py-2 rounded-full border border-white/10">
                                     <button onClick={() => setLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
                                     <span className="opacity-10 text-white">|</span>
@@ -383,10 +388,12 @@
                         <div className="container-custom text-center md:text-left grid md:grid-cols-12 items-center gap-12">
                             <div className="md:col-span-12 lg:col-span-10">
                                 <div className="lg:hidden mb-8 flex flex-col gap-4 items-center md:items-start">
-                                    <div className="switch-container">
-                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
-                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
-                                    </div>
+                                    {lang === 'pt' && (
+                                        <div className="switch-container">
+                                            <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
+                                            <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
+                                        </div>
+                                    )}
                                     <div className="flex gap-4">
                                         <button onClick={() => setLang('pt')} className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}>PT</button>
                                         <button onClick={() => setLang('en')} className={`lang-btn ${lang === 'en' ? 'active' : ''}`}>EN</button>
@@ -446,7 +453,9 @@
                                     </div>
                                     <div className="absolute -bottom-6 -right-6 bg-green-500 text-black p-6 rounded-3xl hidden md:block shadow-2xl">
                                         <div className="text-3xl font-black leading-none italic uppercase">+100 ALUNOS</div>
-                                        <div className="text-[10px] font-bold tracking-widest uppercase">Monitorados Diariamente</div>
+                                        <div className="text-[10px] font-bold tracking-widest uppercase">
+                                            {lang === 'pt' ? 'Monitorados Diariamente' : 'Daily Students'}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="md:col-span-7">
@@ -476,19 +485,21 @@
                             <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
                                 <h2 className="text-4xl md:text-8xl font-black uppercase italic leading-none tracking-tighter text-center md:text-left">{t.planTitle} <br/><span className="text-green-600">{t.planTitleSpan}</span></h2>
                                 
-                                <div className="flex flex-col items-center gap-4">
-                                    <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{t.modeLabel}</span>
-                                    <div className="switch-container">
-                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.modeDigital}</button>
-                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.modePersonal}</button>
+                                {lang === 'pt' && (
+                                    <div className="flex flex-col items-center gap-4">
+                                        <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{t.modeLabel}</span>
+                                        <div className="switch-container">
+                                            <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.modeDigital}</button>
+                                            <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.modePersonal}</button>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
 
-                            {/* Conteúdo Renderizado baseado no estado */}
-                            <div key={isDigital ? 'digital' : 'personal'}>
+                            {/* Main Content Area */}
+                            <div key={`${lang}-${isDigital}`}>
                                 {isDigital ? (
-                                    /* ASSESSORIA DIGITAL */
+                                    /* ONLINE MODE */
                                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                                         <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col group hover:border-black transition-colors">
                                             <h3 className="text-2xl font-black uppercase mb-4 tracking-tighter">{t.digitalCard1}</h3>
@@ -527,7 +538,7 @@
                                         </div>
                                     </div>
                                 ) : (
-                                    /* PERSONAL 1:1 */
+                                    /* IN-PERSON MODE (Only available in PT) */
                                     <div>
                                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 text-black">
                                             <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-black/5">
@@ -573,20 +584,20 @@
                                             <div className="p-8 rounded-3xl bg-slate-50 border border-black/5 flex flex-col">
                                                 <h4 className="text-[10px] font-black uppercase text-slate-400 mb-2">{t.pricePack4}</h4>
                                                 <div className="text-3xl font-black mb-2">{t.pricePack4Val}</div>
-                                                <div className="text-[9px] font-bold text-slate-500 uppercase mb-6">{t.pricePerSession.replace('{val}', lang === 'pt' ? '120' : '35')}</div>
+                                                <div className="text-[9px] font-bold text-slate-500 uppercase mb-6">{t.pricePerSession.replace('{val}', '120')}</div>
                                                 <button onClick={() => handleWhatsApp(t.pricePack4)} className="w-full py-3 rounded-xl border-2 border-black font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all">{lang === 'pt' ? 'Selecionar' : 'Select'}</button>
                                             </div>
                                             <div className="p-8 rounded-3xl bg-green-50 border-2 border-green-500 relative shadow-xl flex flex-col">
                                                 <div className="absolute top-0 right-0 bg-green-500 text-black px-3 py-1 text-[8px] font-black uppercase -translate-y-1/2 translate-x-2 rotate-6">{t.recommended}</div>
                                                 <h4 className="text-[10px] font-black uppercase text-green-600 mb-2">{t.pricePack8}</h4>
                                                 <div className="text-3xl font-black mb-2">{t.pricePack8Val}</div>
-                                                <div className="text-[9px] font-bold text-green-700 uppercase mb-6">{t.pricePerSession.replace('{val}', lang === 'pt' ? '110' : '32.5')}</div>
+                                                <div className="text-[9px] font-bold text-green-700 uppercase mb-6">{t.pricePerSession.replace('{val}', '110')}</div>
                                                 <button onClick={() => handleWhatsApp(t.pricePack8)} className="w-full py-3 rounded-xl bg-black text-white font-black uppercase text-[10px] hover:bg-green-600 transition-all">{lang === 'pt' ? 'Selecionar' : 'Select'}</button>
                                             </div>
                                             <div className="p-8 rounded-3xl bg-black text-white border border-white/10 flex flex-col">
                                                 <h4 className="text-[10px] font-black uppercase text-slate-400 mb-2">{t.pricePack12}</h4>
                                                 <div className="text-3xl font-black mb-2 text-green-400">{t.pricePack12Val}</div>
-                                                <div className="text-[9px] font-bold text-slate-400 uppercase mb-6">{t.pricePerSession.replace('{val}', lang === 'pt' ? '100' : '30')}</div>
+                                                <div className="text-[9px] font-bold text-slate-400 uppercase mb-6">{t.pricePerSession.replace('{val}', '100')}</div>
                                                 <button onClick={() => handleWhatsApp(t.pricePack12)} className="w-full py-3 rounded-xl bg-green-500 text-black font-black uppercase text-[10px] hover:bg-white transition-all">{lang === 'pt' ? 'Selecionar' : 'Select'}</button>
                                             </div>
                                         </div>
