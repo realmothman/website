@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tags para evitar que o GitHub Pages guarde cache da versão antiga -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Nícolas Garibaldi | Engenharia do Movimento</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React e Babel -->
@@ -88,7 +93,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Ícones embutidos para evitar crash do React manipulando o DOM
+        // Ícones blindados e embutidos para resolver o BUG da TELA PRETA (Sem dependência do Lucide externo)
         const Icon = ({ name, size = 24, className = "" }) => {
             const icons = {
                 'activity': <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>,
@@ -104,11 +109,11 @@
                 'car': <><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></>,
                 'map-pin': <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></>
             };
-            return (
+            return icons[name] ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
                     {icons[name]}
                 </svg>
-            );
+            ) : null;
         };
 
         const translations = {
@@ -127,6 +132,8 @@
                 heroCTA: "QUERO MINHA ASSESSORIA",
                 heroCTAPers: "QUERO MEU PERSONAL",
                 marquee: ["Performance Atlética", "Reabilitação Funcional", "Treinamento Funcional"],
+                badgeTitle: "ALUNOS",
+                badgeSub: "Monitorados Diariamente",
                 aboutT1: "ENGENHARIA DO",
                 aboutT2: "MOVIMENTO.",
                 aboutSub: "Minha trajetória une o rigor técnico da Educação Física com o raciocínio lógico da Tecnologia.",
@@ -202,6 +209,8 @@
                 heroCTA: "START MY COACHING",
                 heroCTAPers: "",
                 marquee: ["Athletic Performance", "Functional Rehab", "Strength & Data"],
+                badgeTitle: "STUDENTS",
+                badgeSub: "Monitored Daily",
                 aboutT1: "MOVEMENT",
                 aboutT2: "ENGINEERING.",
                 aboutSub: "Merging technical physical education with logical data reasoning.",
@@ -286,7 +295,7 @@
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
-            // Força o modo Digital ao mudar para Inglês
+            // Força o modo Digital ao mudar para Inglês e impede Personal
             const switchLang = (l) => {
                 setLang(l);
                 if (l === 'en') {
@@ -317,7 +326,7 @@
                             </div>
 
                             <div className="hidden lg:flex items-center gap-6">
-                                {/* Exibe os botões de alternância apenas se for Português */}
+                                {/* Aqui a trava do idioma: Personal SOMENTE aparece se lang for 'pt' */}
                                 {lang === 'pt' && (
                                     <div className="switch-container">
                                         <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
@@ -342,7 +351,7 @@
                         <div className="container-custom grid md:grid-cols-12 items-center gap-12 text-center md:text-left">
                             <div className="md:col-span-12 lg:col-span-10">
                                 <div className="lg:hidden mb-8 flex flex-col gap-4 items-center">
-                                    {/* Mobile - Exibe os botões de alternância apenas se for Português */}
+                                    {/* Trava no Mobile: Personal some no Inglês */}
                                     {lang === 'pt' && (
                                         <div className="switch-container">
                                             <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
@@ -403,6 +412,11 @@
                                     <img src="https://i.imgur.com/E2auHBT.jpg" className="w-full h-full object-cover" alt="Nicolas" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent opacity-60"></div>
                                 </div>
+                                {/* Badge de alunos traduzida */}
+                                <div className="absolute -bottom-6 -right-6 bg-green-500 text-black p-6 rounded-3xl hidden md:block shadow-2xl">
+                                    <div className="text-3xl font-black leading-none italic uppercase">+100 {t.badgeTitle}</div>
+                                    <div className="text-[10px] font-bold tracking-widest uppercase">{t.badgeSub}</div>
+                                </div>
                             </div>
                             <div className="md:col-span-7">
                                 <h2 className="text-3xl md:text-6xl font-black text-white leading-none uppercase italic mb-8 underline decoration-green-400 decoration-4">{t.aboutT1} <br/>{t.aboutT2}</h2>
@@ -424,11 +438,11 @@
                         <div className="container-custom">
                             <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
                                 <h2 className="text-4xl md:text-8xl font-black uppercase italic leading-none text-center md:text-left">{t.planT1} <br/><span className="text-green-600">{t.planT2}</span></h2>
-                                {/* Título de Planos - Exibe os botões apenas se for Português */}
+                                {/* Título de Planos - Trava no Inglês */}
                                 {lang === 'pt' && (
                                     <div className="switch-container">
-                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.modeDigital}</button>
-                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.modePersonal}</button>
+                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
+                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
                                     </div>
                                 )}
                             </div>
