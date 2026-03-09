@@ -93,7 +93,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Ícones blindados e embutidos para resolver o BUG da TELA PRETA (Sem dependência do Lucide externo)
+        // Ícones blindados e embutidos
         const Icon = ({ name, size = 24, className = "" }) => {
             const icons = {
                 'activity': <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>,
@@ -107,7 +107,8 @@
                 'message-circle': <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>,
                 'file-text': <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></>,
                 'car': <><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></>,
-                'map-pin': <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></>
+                'map-pin': <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></>,
+                'target': <><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></>
             };
             return icons[name] ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -118,6 +119,7 @@
 
         const translations = {
             pt: {
+                waGreeting: "Olá Nícolas! Quero saber mais sobre ",
                 navAssessoria: "Assessoria",
                 navPersonal: "Personal 1:1",
                 navBtn: "Abrir Protocolo",
@@ -139,13 +141,19 @@
                 aboutSub: "Minha trajetória une o rigor técnico da Educação Física com o raciocínio lógico da Tecnologia.",
                 aboutText: "Com 6 anos de experiência prática, gerencio o treinamento de mais de 100 alunos no CT em que atuo. Utilizo meu background tecnológico para monitorar cada detalhe da sua evolução técnica. Cada treino é pensado para você evoluir de verdade.",
                 checks: ["Monitoramento por Dados", "Reabilitação Funcional", "Performance Atlética", "Treinamento Funcional"],
+                
+                // Nova Seção de Avaliação (Showcase do Relatório)
+                evalTitle: "AVALIAÇÃO",
+                evalSpan: "BIOMECÂNICA.",
+                evalSub: "O mapa exato do seu corpo e performance.",
+                evalText: "Nós não prescrevemos treinos baseados em achismos. Nosso protocolo inicial rastreia assimetrias, analisa sua postura digitalmente e quantifica seus déficits de força para criar um plano à prova de falhas.",
+                evalChecks: ["Análise Digital de Postura", "Mapeamento de Assimetrias", "Índice de Força de Suporte", "Prescrição Corretiva Exata"],
+                
                 planT1: "PLANOS DE",
                 planT2: "EVOLUÇÃO.",
                 cardAssessment: "Avaliação Digital",
-                priceAssessment1: "R$ 120",
-                priceAssessment2: "R$ 150",
-                itemAssessment1: "Movimento",
-                itemAssessment2: "Movimentos + Antropométrica",
+                priceAssessment1: "R$ 150",
+                itemAssessment1: "Análise de Movimento",
                 descAssessment: "Diagnóstico biomecânico essencial para iniciarmos sua estratégia online.",
                 btnAssessment: "Agendar Diagnóstico",
                 cardMain: "Assessoria",
@@ -154,12 +162,10 @@
                 vagas: "Vagas Limitadas",
                 featuresMain: ["Treino A/B Personalizado", "Troca Mensal de Planejamento", "1 Aula Online Mensal (1h)", "Suporte WhatsApp Direto"],
                 btnMain: "Quero Iniciar",
-                cardExtra: "Adicionais",
-                extra1: "Corrida",
-                extra1Price: "+R$ 100",
-                extra2: "Presencial",
-                extra2Price: "+R$ 100",
-                extraDesc: "Para refinamento técnico e presencial em Porto Alegre.",
+                cardExtra: "Adicional",
+                extra1: "Periodização de Performance",
+                extra1Price: "+R$ 150",
+                extraDesc: "Planejamento avançado focado em atletas amadores e alto rendimento.",
                 handmadeTitle: "TREINO 100% FEITO À MÃO 👊",
                 handmadeSub: "Nada de planilha pronta. Nada genérico. Eu analiso tua rotina, limitações e objetivos para montar exatamente o que tu precisa.",
                 inclusoT: "📋 O que está incluso",
@@ -195,6 +201,7 @@
                 mobileCTA: "INICIAR AGORA"
             },
             en: {
+                waGreeting: "Hi Nícolas! I'd like to know more about ",
                 navAssessoria: "Online Coaching",
                 navPersonal: "", 
                 navBtn: "Get Started",
@@ -216,13 +223,19 @@
                 aboutSub: "Merging technical physical education with logical data reasoning.",
                 aboutText: "With 6 years of experience, I manage over 100 students daily. I use my tech background to monitor every technical detail, ensuring your growth is based on facts, not guesses.",
                 checks: ["Data-Driven Monitoring", "Functional Rehab", "Performance Training", "Strength Protocols"],
+                
+                // Nova Seção de Avaliação (Showcase do Relatório) - EN
+                evalTitle: "BIOMECHANICAL",
+                evalSpan: "ASSESSMENT.",
+                evalSub: "The exact blueprint of your body and performance.",
+                evalText: "We don't prescribe workouts based on guesswork. Our initial protocol tracks asymmetries, digitally analyzes your posture, and quantifies your strength deficits to build a bulletproof plan.",
+                evalChecks: ["Digital Posture Analysis", "Asymmetry Mapping", "Support Strength Index", "Exact Corrective Prescription"],
+                
                 planT1: "EVOLUTION",
                 planT2: "PLANS.",
                 cardAssessment: "Digital Assessment",
-                priceAssessment1: "$ 30",
-                priceAssessment2: "$ 40",
-                itemAssessment1: "Movement",
-                itemAssessment2: "Movement + Anthropometry",
+                priceAssessment1: "$ 40",
+                itemAssessment1: "Biomechanical Movement Screen",
                 descAssessment: "Essential biomechanical diagnosis to start your online strategy with safety.",
                 btnAssessment: "Book Assessment",
                 cardMain: "Online Coaching",
@@ -231,12 +244,10 @@
                 vagas: "Limited Spots",
                 featuresMain: ["Personalized Workout Plan", "Monthly Plan Updates", "1 Monthly Online Class (1h)", "Direct WhatsApp Support"],
                 btnMain: "Get Started",
-                cardExtra: "Add-ons",
-                extra1: "Running Plans",
-                extra1Price: "+$ 20",
-                extra2: "Consultation",
-                extra2Price: "+$ 30",
-                extraDesc: "Technical refinement sessions (Porto Alegre only).",
+                cardExtra: "Add-on",
+                extra1: "Performance Periodization",
+                extra1Price: "+$ 30",
+                extraDesc: "Advanced planning focused on amateur athletes and high performance.",
                 handmadeTitle: "",
                 handmadeSub: "",
                 inclusoT: "",
@@ -306,7 +317,8 @@
             const handleWhatsApp = (p = "") => {
                 const num = "5551998422391";
                 const ctx = isDigital ? t.navAssessoria : t.navPersonal;
-                const msg = encodeURIComponent(`Olá Nícolas! Quero saber mais sobre ${ctx}${p ? ` (${p})` : ""}.`);
+                // Formatação: "Olá Nícolas! Quero saber mais sobre Assessoria - Avaliação Digital."
+                const msg = encodeURIComponent(`${t.waGreeting}${ctx}${p ? ` - ${p}` : ""}.`);
                 window.open(`https://wa.me/${num}?text=${msg}`, '_blank');
             };
 
@@ -433,18 +445,46 @@
                         </div>
                     </section>
 
+                    {/* NOVA SEÇÃO: Avaliação Biomecânica Showcase */}
+                    <section className="py-24 bg-[#05080f] relative border-t border-white/5">
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-500/5 rounded-full blur-[120px] -z-10"></div>
+                        <div className="container-custom grid md:grid-cols-12 gap-12 items-center">
+                            <div className="md:col-span-6 order-2 md:order-1">
+                                <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 px-4 py-2 rounded-full mb-6">
+                                    <Icon name="target" size={12} className="text-green-400" />
+                                    <span className="text-[10px] font-black tracking-widest uppercase text-green-400 italic">
+                                        Data-Driven Protocol
+                                    </span>
+                                </div>
+                                <h2 className="text-3xl md:text-6xl font-black text-white leading-none uppercase italic mb-6">
+                                    {t.evalTitle} <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-300">{t.evalSpan}</span>
+                                </h2>
+                                <p className="text-xl text-white font-bold mb-4">{t.evalSub}</p>
+                                <p className="text-sm text-slate-400 leading-relaxed mb-8">{t.evalText}</p>
+                                <ul className="space-y-4 uppercase text-[10px] font-black tracking-widest">
+                                    {t.evalChecks.map((c, i) => (
+                                        <li key={i} className="flex items-center gap-3">
+                                            <div className="bg-green-500/20 p-1.5 rounded-full"><Icon name="check" size={12} className="text-green-400" /></div>
+                                            <span className="text-slate-300">{c}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="md:col-span-6 order-1 md:order-2 relative">
+                                {/* IMPORTANTE: Cole o link da sua imagem do relatório no "src" abaixo */}
+                                <div className="rounded-[2rem] border border-white/10 overflow-hidden shadow-[0_0_50px_rgba(34,197,94,0.1)] bg-slate-900">
+                                    <img src="https://i.imgur.com/DsGWWIF.png" alt="Relatório de Performance" className="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     {/* Planos */}
                     <section className="py-24 bg-white text-black rounded-t-[3rem] md:rounded-t-[5rem] shadow-2xl relative z-30">
                         <div className="container-custom">
                             <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
                                 <h2 className="text-4xl md:text-8xl font-black uppercase italic leading-none text-center md:text-left">{t.planT1} <br/><span className="text-green-600">{t.planT2}</span></h2>
-                                {/* Título de Planos - Trava no Inglês */}
-                                {lang === 'pt' && (
-                                    <div className="switch-container">
-                                        <button onClick={() => setIsDigital(true)} className={`switch-btn ${isDigital ? 'active' : ''}`}>{t.navAssessoria}</button>
-                                        <button onClick={() => setIsDigital(false)} className={`switch-btn ${!isDigital ? 'active' : ''}`}>{t.navPersonal}</button>
-                                    </div>
-                                )}
+                                {/* Removido os botões de Assessoria / Personal daqui de dentro conforme solicitado */}
                             </div>
 
                             {isDigital ? (
@@ -454,7 +494,6 @@
                                         <h3 className="text-2xl font-black uppercase mb-4">{t.cardAssessment}</h3>
                                         <div className="space-y-4 mb-10 border-b border-black/10 pb-6 font-black uppercase text-[10px]">
                                             <div className="flex justify-between items-end"><span>{t.itemAssessment1}</span><span className="text-2xl text-green-600 leading-none">{t.priceAssessment1}</span></div>
-                                            <div className="flex justify-between items-end"><span>{t.itemAssessment2}</span><span className="text-2xl text-green-600 leading-none">{t.priceAssessment2}</span></div>
                                         </div>
                                         <p className="text-[10px] font-black uppercase text-slate-500 mb-6 italic">{t.descAssessment}</p>
                                         <button onClick={() => handleWhatsApp(t.cardAssessment)} className="mt-auto w-full py-4 rounded-xl border-2 border-black font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all">{t.btnAssessment}</button>
@@ -473,8 +512,7 @@
                                     <div className="p-10 rounded-[2.5rem] bg-slate-100 border border-black/5 flex flex-col">
                                         <h3 className="text-2xl font-black uppercase mb-8">{t.cardExtra}</h3>
                                         <div className="space-y-4 mb-10 font-black uppercase text-[10px]">
-                                            <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{t.extra1}</span><span className="text-green-600">{t.extra1Price}</span></div>
-                                            <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{t.extra2}</span><span className="text-green-600">{t.extra2Price}</span></div>
+                                            <div className="flex justify-between p-4 bg-white rounded-xl shadow-sm"><span>{t.extra1}</span><span className="text-green-600 text-lg">{t.extra1Price}</span></div>
                                         </div>
                                         <p className="text-[10px] text-slate-400 uppercase font-black italic">{t.extraDesc}</p>
                                     </div>
